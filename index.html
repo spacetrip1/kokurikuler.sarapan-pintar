@@ -2289,7 +2289,7 @@ function vTentang(){
 /* ---------- 14. DEMO ---------- */
 function buildDemo(){
   const s=freshState("demo");
-  s.profile={nick:"Raka (SIMULASI)",age:16,sex:"L",weight:55,height:165,activity:"sedang"};
+  s.profile={nick:"Raja Ilham (SIMULASI)",age:16,sex:"L",weight:55,height:165,activity:"sedang"};
   const today=todayKey();
   const tmp={foods:s.foods};
   const snap=(id,g)=>{ const f=tmp.foods.find(x=>x.id===id); const per100={}; NKEYS.forEach(k=>per100[k]=toNum(f[k])); return {foodId:f.id,name:f.name,state:f.state,status:f.status,local:!!f.local,cat:f.cat,grams:g,per100}; };
