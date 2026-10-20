@@ -1,0 +1,2416 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1E4A31">
+<title>Sarapan Pintar</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="SARAPAN PINTAR — Kenali Gizimu, Mulai dari Sarapan Lokal. Prototipe edukasi gizi sarapan pangan lokal Jember.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: sidebar kiri (desktop) / navigasi bawah (ponsel); dashboard berbasis kartu ringkas di atas krem terang */
+:root{
+  --bg:#FAF6EC; --surface:#FFFFFF; --surface-2:#F2EDDD; --line:#E3DAC4;
+  --ink:#18261D; --muted:#55645A; --leaf:#3B8A4A; --leaf-soft:#E2F0DF;
+  --forest:#1E4A31; --sun:#E7AE2F; --sun-soft:#FBEFC9; --sun-ink:#6E4B07;
+  --danger:#B0412A; --danger-soft:#F8E1DA; --info:#2D6A8A;
+  --primary:#1E4A31; --on-primary:#FFFFFF; --hero-bg:#1E4A31;
+  --shadow:0 1px 2px rgba(30,74,49,.06),0 6px 20px rgba(30,74,49,.07);
+  --f-display:"Bricolage Grotesque","Plus Jakarta Sans",system-ui,sans-serif;
+  --f-body:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --r:14px; --r-sm:10px;
+  --c-pokok:#E7C66A; --c-lauk:#C9824A; --c-sayur:#5FA35A; --c-buah:#F0B43C; --c-kacang:#B99366; --c-lemak:#D9B13B; --c-minum:#9CC3D5;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#111813; --surface:#19231C; --surface-2:#202C23; --line:#2F3D33;
+  --ink:#ECF2EC; --muted:#A3B3A7; --leaf:#72C482; --leaf-soft:#22382A;
+  --forest:#A9DAB4; --sun:#F1C255; --sun-soft:#3A3117; --sun-ink:#F6D98E;
+  --danger:#E8836B; --danger-soft:#3D2620; --info:#7DB8D6;
+  --primary:#72C482; --on-primary:#0E1A12; --hero-bg:#1F3D2B; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111813; --surface:#19231C; --surface-2:#202C23; --line:#2F3D33;
+  --ink:#ECF2EC; --muted:#A3B3A7; --leaf:#72C482; --leaf-soft:#22382A;
+  --forest:#A9DAB4; --sun:#F1C255; --sun-soft:#3A3117; --sun-ink:#F6D98E;
+  --danger:#E8836B; --danger-soft:#3D2620; --info:#7DB8D6;
+  --primary:#72C482; --on-primary:#0E1A12; --hero-bg:#1F3D2B; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25); color-scheme:dark}
+*{box-sizing:border-box}
+html,body{background:var(--bg)}
+body{margin:0;color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1{font-size:clamp(1.5rem,3.2vw,2rem);font-weight:800}
+h2{font-size:1.15rem;font-weight:700}
+h3{font-size:1rem;font-weight:700}
+p{margin:0}
+.num{font-variant-numeric:tabular-nums}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--sun);outline-offset:2px;border-radius:6px}
+a{color:var(--leaf)}
+
+/* Shell */
+.shell{display:grid;grid-template-columns:236px minmax(0,1fr);min-height:100vh}
+.side{position:sticky;top:0;height:100vh;padding:24px 16px;border-right:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;gap:22px}
+.brand{display:flex;gap:10px;align-items:center;padding:0 8px}
+.brand-mark{width:38px;height:38px;flex:none}
+.brand b{font-family:var(--f-display);font-weight:800;font-size:1.05rem;letter-spacing:.02em;display:block;color:var(--forest)}
+.brand small{color:var(--muted);font-size:.72rem;display:block;line-height:1.3}
+.nav{display:flex;flex-direction:column;gap:4px}
+.nav button{all:unset;cursor:pointer;display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--r-sm);color:var(--muted);font-weight:600}
+.nav button svg{width:20px;height:20px;flex:none}
+.nav button:hover{background:var(--surface-2);color:var(--ink)}
+.nav button[aria-current="page"]{background:var(--leaf-soft);color:var(--forest)}
+.nav button:focus-visible{outline:3px solid var(--sun)}
+.side-foot{margin-top:auto;display:flex;flex-direction:column;gap:8px;font-size:.8rem;color:var(--muted)}
+.main{min-width:0;padding-block:24px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.topbar{display:none}
+.bottomnav{display:none}
+
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr}
+  .side{display:none}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line);padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+  .main{padding-block:16px 110px}
+  .bottomnav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);padding:6px max(6px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(6px,env(safe-area-inset-left,0px))}
+  .bottomnav button{all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;border-radius:10px;font-size:.68rem;font-weight:600;color:var(--muted);text-align:center}
+  .bottomnav button svg{width:22px;height:22px}
+  .bottomnav button[aria-current="page"]{color:var(--forest);background:var(--leaf-soft)}
+}
+
+/* Common */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px;min-width:0}
+.card-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.muted{color:var(--muted)}
+.small{font-size:.82rem}
+.eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g5{grid-template-columns:repeat(5,minmax(0,1fr))}
+@media (max-width:1000px){.g5{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:860px){.g2,.g3{grid-template-columns:1fr}.g5{grid-template-columns:repeat(2,minmax(0,1fr))}.g5>:first-child{grid-column:1/-1}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:9px 14px;border-radius:var(--r-sm);font-weight:600;cursor:pointer;min-height:40px;text-decoration:none;font-size:.9rem}
+.btn:hover{background:var(--surface-2)}
+.btn.primary{background:var(--primary);border-color:var(--primary);color:var(--on-primary)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.sun{background:var(--sun);border-color:var(--sun);color:#2B1E02}
+.btn.danger{color:var(--danger);border-color:var(--danger)}
+.btn.danger.solid{background:var(--danger);color:#fff}
+.btn.ghost{border-color:transparent;background:transparent}
+.btn.sm{min-height:32px;padding:5px 10px;font-size:.82rem}
+.btn[disabled]{opacity:.55;cursor:not-allowed;filter:none}
+.btn svg{width:18px;height:18px}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;font-weight:700;padding:3px 8px;border-radius:999px;background:var(--surface-2);color:var(--muted);white-space:nowrap}
+.chip.sim{background:var(--sun-soft);color:var(--sun-ink)}
+.chip.ok{background:var(--leaf-soft);color:var(--forest)}
+.chip.raw{background:var(--surface-2);color:var(--muted)}
+.chip.local{background:var(--leaf-soft);color:var(--forest)}
+.chip.warn{background:var(--danger-soft);color:var(--danger)}
+label{font-weight:600;font-size:.85rem}
+.field{display:flex;flex-direction:column;gap:5px;min-width:0}
+.field .hint{font-size:.76rem;color:var(--muted);font-weight:400}
+.field .err{font-size:.78rem;color:var(--danger);font-weight:600}
+input[type=text],input[type=number],input[type=date],input[type=time],input[type=url],input[type=search],select,textarea{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);min-height:40px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--leaf);outline-offset:0;border-color:var(--leaf)}
+input[aria-invalid="true"]{border-color:var(--danger);background:var(--danger-soft)}
+textarea{min-height:70px;resize:vertical}
+.banner{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:10px 14px;border-radius:var(--r-sm);font-size:.86rem;font-weight:500}
+.banner.demo{background:var(--sun-soft);color:var(--sun-ink);border:1px solid var(--sun)}
+.banner.err{background:var(--danger-soft);color:var(--danger);border:1px solid var(--danger)}
+.banner.info{background:var(--leaf-soft);color:var(--forest)}
+.empty{padding:22px;text-align:center;color:var(--muted);border:1.5px dashed var(--line);border-radius:var(--r);display:flex;flex-direction:column;gap:10px;align-items:center}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.86rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tfoot td{font-weight:700;border-bottom:0}
+
+/* Dashboard */
+.hello{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.hello .date{color:var(--muted);font-weight:500}
+.hero{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:16px}
+@media (max-width:860px){.hero{grid-template-columns:1fr}}
+.hero-main{background:var(--hero-bg);color:#F3F7F1;border:0}
+.hero-main .eyebrow{color:inherit;opacity:.75}
+.big{font-family:var(--f-display);font-weight:800;font-size:clamp(2.4rem,6vw,3.4rem);line-height:1;letter-spacing:-.02em}
+.big small{font-size:1rem;font-weight:600;opacity:.8;margin-left:4px;letter-spacing:0}
+.gauge{position:relative;height:14px;border-radius:999px;background:rgba(255,255,255,.18);margin:18px 0 6px}
+.gauge .band{position:absolute;top:-3px;bottom:-3px;border:1.5px dashed rgba(255,255,255,.85);border-radius:4px}
+.gauge .fill{position:absolute;left:0;top:0;bottom:0;border-radius:999px;background:var(--sun)}
+.gauge-scale{display:flex;justify-content:space-between;font-size:.72rem;opacity:.8}
+.hero-stats{display:flex;gap:22px;flex-wrap:wrap;margin-top:14px}
+.hero-stats div{display:flex;flex-direction:column}
+.hero-stats b{font-size:1.1rem;font-variant-numeric:tabular-nums}
+.hero-stats span{font-size:.75rem;opacity:.8}
+.macro{display:flex;flex-direction:column;gap:8px}
+.macro .v{font-family:var(--f-display);font-weight:800;font-size:1.6rem;line-height:1;font-variant-numeric:tabular-nums}
+.macro .v small{font-size:.8rem;font-weight:600;color:var(--muted);font-family:var(--f-body)}
+.bar{height:8px;border-radius:999px;background:var(--surface-2);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:999px;background:var(--leaf)}
+.bar i.over{background:var(--sun)}
+.macro .t{font-size:.76rem;color:var(--muted)}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block;flex:none}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.78rem;color:var(--muted)}
+.legend span{display:inline-flex;gap:6px;align-items:center}
+.chart svg{width:100%;height:auto;display:block}
+.loglist{display:flex;flex-direction:column}
+.logitem{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.logitem:last-child{border-bottom:0}
+.logitem .ic{width:44px;height:44px;border-radius:12px;background:var(--surface-2);display:grid;place-items:center}
+.logitem .ic svg{width:44px;height:44px}
+.logitem .nm{font-weight:700;overflow-wrap:anywhere}
+.logitem .meta{font-size:.78rem;color:var(--muted)}
+.logitem .kc{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+.logitem .acts{grid-column:2/4;display:flex;gap:6px;flex-wrap:wrap}
+.split{display:flex;height:12px;border-radius:999px;overflow:hidden;background:var(--surface-2)}
+.split i{display:block;height:100%}
+
+/* Catat */
+.catat{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:16px;align-items:start}
+@media (max-width:960px){.catat{grid-template-columns:1fr}}
+.results{display:flex;flex-direction:column;gap:6px;max-height:430px;overflow:auto;margin-top:10px}
+.res{all:unset;cursor:pointer;display:flex;justify-content:space-between;gap:10px;align-items:center;padding:9px 11px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface)}
+.res:hover,.res:focus-visible{border-color:var(--leaf);background:var(--leaf-soft)}
+.res b{display:block;font-size:.9rem}
+.res small{color:var(--muted);font-size:.74rem}
+.res .plus{font-weight:800;color:var(--leaf);font-size:1.2rem}
+.items{display:flex;flex-direction:column;gap:8px}
+.item{display:grid;grid-template-columns:minmax(0,1fr) 110px 36px;gap:10px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface)}
+.item .nm{font-weight:700;font-size:.9rem}
+.item .calc{font-size:.76rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.gram{position:relative}
+.gram input{padding-right:30px;text-align:right}
+.gram span{position:absolute;right:10px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.8rem;pointer-events:none}
+.totals{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;background:var(--surface-2);border-radius:var(--r-sm);padding:12px}
+.totals div{display:flex;flex-direction:column}
+.totals b{font-size:1.05rem;font-variant-numeric:tabular-nums}
+.totals span{font-size:.7rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+@media (max-width:520px){.totals{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.iconbtn{all:unset;cursor:pointer;width:36px;height:36px;display:grid;place-items:center;border-radius:10px;color:var(--muted)}
+.iconbtn:hover{background:var(--danger-soft);color:var(--danger)}
+.iconbtn svg{width:18px;height:18px}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:520px){.form-grid{grid-template-columns:1fr}}
+.span2{grid-column:1/-1}
+
+/* Katalog */
+.tabs{display:inline-flex;background:var(--surface-2);border-radius:999px;padding:4px;gap:4px}
+.tabs button{all:unset;cursor:pointer;padding:7px 16px;border-radius:999px;font-weight:600;font-size:.88rem;color:var(--muted)}
+.tabs button[aria-selected="true"]{background:var(--surface);color:var(--forest);box-shadow:var(--shadow)}
+.menus{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.menu-card{display:flex;flex-direction:column;gap:12px;padding:0;overflow:hidden}
+.menu-card .pic{background:var(--surface-2);display:grid;place-items:center;padding:14px;position:relative}
+.menu-card .pic svg{width:132px;height:132px}
+.menu-card .pic .chip{position:absolute;top:10px;left:10px}
+.menu-card .body{padding:0 16px 16px;display:flex;flex-direction:column;gap:10px;flex:1}
+.menu-card .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;font-size:.78rem;color:var(--muted)}
+.menu-card .stats b{display:block;color:var(--ink);font-size:.98rem;font-variant-numeric:tabular-nums}
+.menu-card .acts{display:flex;gap:8px;margin-top:auto;flex-wrap:wrap}
+.menu-card .acts .btn{flex:1}
+
+/* Modal */
+.modal-bg{position:fixed;inset:0;background:rgba(10,20,14,.55);z-index:100;display:flex;align-items:flex-end;justify-content:center;padding:0}
+@media (min-width:700px){.modal-bg{align-items:center;padding:24px}}
+.modal{background:var(--bg);width:100%;max-width:720px;max-height:92vh;overflow:auto;border-radius:18px 18px 0 0;padding:20px max(18px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:14px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+@media (min-width:700px){.modal{border-radius:18px}}
+.modal.sm{max-width:440px}
+.modal>*{flex-shrink:0}
+.mstats{grid-template-columns:repeat(3,minmax(0,1fr))}
+.modal-h{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.modal-x{all:unset;cursor:pointer;width:36px;height:36px;display:grid;place-items:center;border-radius:10px;flex:none;background:var(--surface-2)}
+.modal-x svg{width:18px;height:18px}
+.qrbox{display:grid;place-items:center;background:#fff;border-radius:var(--r);padding:16px;border:1px solid var(--line)}
+.qrbox img{width:240px;height:240px;image-rendering:pixelated;max-width:100%}
+.urlbox{display:flex;gap:8px}
+.urlbox input{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.8rem}
+.toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-weight:600;font-size:.88rem;z-index:200;max-width:calc(100% - 32px);text-align:center}
+@media (min-width:861px){.toast{bottom:28px}}
+.prose{max-width:72ch;display:flex;flex-direction:column;gap:10px}
+.prose h2{margin-top:10px}
+.prose ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.formula{font-family:ui-monospace,Menlo,Consolas,monospace;background:var(--surface-2);padding:10px 12px;border-radius:var(--r-sm);font-size:.85rem;overflow-x:auto}
+#print-area{display:none}
+@media print{
+  body.printing-qr .shell,body.printing-qr .modal-bg,body.printing-qr .toast,body.printing-qr .bottomnav,body.printing-qr .topbar{display:none!important}
+  body.printing-qr #print-area{display:flex!important;flex-direction:column;align-items:center;gap:12px;padding:40px;font-family:var(--f-body);color:#000}
+  body.printing-qr #print-area img{width:8cm;height:8cm;image-rendering:pixelated}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+
+<div class="shell">
+  <aside class="side" aria-label="Navigasi utama">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true"><circle style="fill:var(--leaf-soft)" cx="20" cy="20" r="19"/><circle style="fill:var(--surface);stroke:var(--forest)" cx="20" cy="22" r="11" stroke-width="2"/><circle style="fill:var(--sun)" cx="20" cy="22" r="5"/><path style="fill:var(--leaf)" d="M20 3c4 3 5 7 3 11-4-1-6-5-3-11z"/></svg>
+      <div><b>SARAPAN PINTAR</b><small>Kenali Gizimu, Mulai dari Sarapan Lokal</small></div>
+    </div>
+    <nav class="nav" id="sidenav"></nav>
+    <div class="side-foot">
+      <button class="btn sm ghost" data-action="go" data-view="tentang" style="justify-content:flex-start">Tentang &amp; Metodologi</button>
+      <span>Prototipe edukasi, bukan alat diagnosis.</span>
+    </div>
+  </aside>
+  <div style="min-width:0">
+    <header class="topbar">
+      <div class="brand" style="padding:0">
+        <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true"><circle style="fill:var(--leaf-soft)" cx="20" cy="20" r="19"/><circle style="fill:var(--surface);stroke:var(--forest)" cx="20" cy="22" r="11" stroke-width="2"/><circle style="fill:var(--sun)" cx="20" cy="22" r="5"/><path style="fill:var(--leaf)" d="M20 3c4 3 5 7 3 11-4-1-6-5-3-11z"/></svg>
+        <div><b>SARAPAN PINTAR</b><small>Kenali Gizimu, Mulai dari Sarapan Lokal</small></div>
+      </div>
+      <button class="btn sm" data-action="go" data-view="tentang" aria-label="Tentang dan Metodologi">Info</button>
+    </header>
+    <main class="main" id="main" tabindex="-1">
+      <div class="wrap">
+        <div id="banners" class="grid" style="gap:8px"></div>
+        <div id="view"></div>
+      </div>
+    </main>
+  </div>
+</div>
+<nav class="bottomnav" id="bottomnav" aria-label="Navigasi utama"></nav>
+<div id="modal-root"></div>
+<div id="print-area"></div>
+
+<script>
+/* QR encoder: QRCode for JavaScript (c) 2009 Kazuhiko Arase, MIT license; node port from qrcode-terminal 0.12.0 (MIT). Bundled inline so QR works offline. */
+(function(){var M={};var C={};function R(n){n=n.replace("./","").replace(/\.js$/,"");if(C[n])return C[n].exports;var m={exports:{}};C[n]=m;M[n](m,m.exports,R);return m.exports;}
+M["QR8bitByte"]=function(module,exports,require){
+var QRMode = require('./QRMode');
+
+function QR8bitByte(data) {
+	this.mode = QRMode.MODE_8BIT_BYTE;
+	this.data = data;
+}
+
+QR8bitByte.prototype = {
+
+	getLength : function() {
+		return this.data.length;
+	},
+	
+	write : function(buffer) {
+		for (var i = 0; i < this.data.length; i++) {
+			// not JIS ...
+			buffer.put(this.data.charCodeAt(i), 8);
+		}
+	}
+};
+
+module.exports = QR8bitByte;
+
+};
+M["QRBitBuffer"]=function(module,exports,require){
+function QRBitBuffer() {
+	this.buffer = [];
+	this.length = 0;
+}
+
+QRBitBuffer.prototype = {
+
+	get : function(index) {
+		var bufIndex = Math.floor(index / 8);
+		return ( (this.buffer[bufIndex] >>> (7 - index % 8) ) & 1) == 1;
+	},
+	
+	put : function(num, length) {
+		for (var i = 0; i < length; i++) {
+			this.putBit( ( (num >>> (length - i - 1) ) & 1) == 1);
+		}
+	},
+	
+	getLengthInBits : function() {
+		return this.length;
+	},
+	
+	putBit : function(bit) {
+	
+		var bufIndex = Math.floor(this.length / 8);
+		if (this.buffer.length <= bufIndex) {
+			this.buffer.push(0);
+		}
+	
+		if (bit) {
+			this.buffer[bufIndex] |= (0x80 >>> (this.length % 8) );
+		}
+	
+		this.length++;
+	}
+};
+
+module.exports = QRBitBuffer;
+
+};
+M["QRErrorCorrectLevel"]=function(module,exports,require){
+module.exports = {
+	L : 1,
+	M : 0,
+	Q : 3,
+	H : 2
+};
+
+
+};
+M["QRMaskPattern"]=function(module,exports,require){
+module.exports = {
+	PATTERN000 : 0,
+	PATTERN001 : 1,
+	PATTERN010 : 2,
+	PATTERN011 : 3,
+	PATTERN100 : 4,
+	PATTERN101 : 5,
+	PATTERN110 : 6,
+	PATTERN111 : 7
+};
+
+};
+M["QRMath"]=function(module,exports,require){
+var QRMath = {
+
+	glog : function(n) {
+	
+		if (n < 1) {
+			throw new Error("glog(" + n + ")");
+		}
+		
+		return QRMath.LOG_TABLE[n];
+	},
+	
+	gexp : function(n) {
+	
+		while (n < 0) {
+			n += 255;
+		}
+	
+		while (n >= 256) {
+			n -= 255;
+		}
+	
+		return QRMath.EXP_TABLE[n];
+	},
+	
+	EXP_TABLE : new Array(256),
+	
+	LOG_TABLE : new Array(256)
+
+};
+	
+for (var i = 0; i < 8; i++) {
+	QRMath.EXP_TABLE[i] = 1 << i;
+}
+for (var i = 8; i < 256; i++) {
+	QRMath.EXP_TABLE[i] = QRMath.EXP_TABLE[i - 4]
+		^ QRMath.EXP_TABLE[i - 5]
+		^ QRMath.EXP_TABLE[i - 6]
+		^ QRMath.EXP_TABLE[i - 8];
+}
+for (var i = 0; i < 255; i++) {
+	QRMath.LOG_TABLE[QRMath.EXP_TABLE[i] ] = i;
+}
+
+module.exports = QRMath;
+
+};
+M["QRMode"]=function(module,exports,require){
+module.exports = {
+    MODE_NUMBER :       1 << 0,
+    MODE_ALPHA_NUM :    1 << 1,
+    MODE_8BIT_BYTE :    1 << 2,
+    MODE_KANJI :        1 << 3
+};
+
+};
+M["QRPolynomial"]=function(module,exports,require){
+var QRMath = require('./QRMath');
+
+function QRPolynomial(num, shift) {
+	if (num.length === undefined) {
+		throw new Error(num.length + "/" + shift);
+	}
+
+	var offset = 0;
+
+	while (offset < num.length && num[offset] === 0) {
+		offset++;
+	}
+
+	this.num = new Array(num.length - offset + shift);
+	for (var i = 0; i < num.length - offset; i++) {
+		this.num[i] = num[i + offset];
+	}
+}
+
+QRPolynomial.prototype = {
+
+	get : function(index) {
+		return this.num[index];
+	},
+	
+	getLength : function() {
+		return this.num.length;
+	},
+	
+	multiply : function(e) {
+	
+		var num = new Array(this.getLength() + e.getLength() - 1);
+	
+		for (var i = 0; i < this.getLength(); i++) {
+			for (var j = 0; j < e.getLength(); j++) {
+				num[i + j] ^= QRMath.gexp(QRMath.glog(this.get(i) ) + QRMath.glog(e.get(j) ) );
+			}
+		}
+	
+		return new QRPolynomial(num, 0);
+	},
+	
+	mod : function(e) {
+	
+		if (this.getLength() - e.getLength() < 0) {
+			return this;
+		}
+	
+		var ratio = QRMath.glog(this.get(0) ) - QRMath.glog(e.get(0) );
+	
+		var num = new Array(this.getLength() );
+		
+		for (var i = 0; i < this.getLength(); i++) {
+			num[i] = this.get(i);
+		}
+		
+		for (var x = 0; x < e.getLength(); x++) {
+			num[x] ^= QRMath.gexp(QRMath.glog(e.get(x) ) + ratio);
+		}
+	
+		// recursive call
+		return new QRPolynomial(num, 0).mod(e);
+	}
+};
+
+module.exports = QRPolynomial;
+
+};
+M["QRRSBlock"]=function(module,exports,require){
+var QRErrorCorrectLevel = require('./QRErrorCorrectLevel');
+
+function QRRSBlock(totalCount, dataCount) {
+	this.totalCount = totalCount;
+	this.dataCount  = dataCount;
+}
+
+QRRSBlock.RS_BLOCK_TABLE = [
+
+	// L
+	// M
+	// Q
+	// H
+
+	// 1
+	[1, 26, 19],
+	[1, 26, 16],
+	[1, 26, 13],
+	[1, 26, 9],
+	
+	// 2
+	[1, 44, 34],
+	[1, 44, 28],
+	[1, 44, 22],
+	[1, 44, 16],
+
+	// 3
+	[1, 70, 55],
+	[1, 70, 44],
+	[2, 35, 17],
+	[2, 35, 13],
+
+	// 4		
+	[1, 100, 80],
+	[2, 50, 32],
+	[2, 50, 24],
+	[4, 25, 9],
+	
+	// 5
+	[1, 134, 108],
+	[2, 67, 43],
+	[2, 33, 15, 2, 34, 16],
+	[2, 33, 11, 2, 34, 12],
+	
+	// 6
+	[2, 86, 68],
+	[4, 43, 27],
+	[4, 43, 19],
+	[4, 43, 15],
+	
+	// 7		
+	[2, 98, 78],
+	[4, 49, 31],
+	[2, 32, 14, 4, 33, 15],
+	[4, 39, 13, 1, 40, 14],
+	
+	// 8
+	[2, 121, 97],
+	[2, 60, 38, 2, 61, 39],
+	[4, 40, 18, 2, 41, 19],
+	[4, 40, 14, 2, 41, 15],
+	
+	// 9
+	[2, 146, 116],
+	[3, 58, 36, 2, 59, 37],
+	[4, 36, 16, 4, 37, 17],
+	[4, 36, 12, 4, 37, 13],
+	
+	// 10		
+	[2, 86, 68, 2, 87, 69],
+	[4, 69, 43, 1, 70, 44],
+	[6, 43, 19, 2, 44, 20],
+	[6, 43, 15, 2, 44, 16],
+
+	// 11
+	[4, 101, 81],
+	[1, 80, 50, 4, 81, 51],
+	[4, 50, 22, 4, 51, 23],
+	[3, 36, 12, 8, 37, 13],
+
+	// 12
+	[2, 116, 92, 2, 117, 93],
+	[6, 58, 36, 2, 59, 37],
+	[4, 46, 20, 6, 47, 21],
+	[7, 42, 14, 4, 43, 15],
+
+	// 13
+	[4, 133, 107],
+	[8, 59, 37, 1, 60, 38],
+	[8, 44, 20, 4, 45, 21],
+	[12, 33, 11, 4, 34, 12],
+
+	// 14
+	[3, 145, 115, 1, 146, 116],
+	[4, 64, 40, 5, 65, 41],
+	[11, 36, 16, 5, 37, 17],
+	[11, 36, 12, 5, 37, 13],
+
+	// 15
+	[5, 109, 87, 1, 110, 88],
+	[5, 65, 41, 5, 66, 42],
+	[5, 54, 24, 7, 55, 25],
+	[11, 36, 12],
+
+	// 16
+	[5, 122, 98, 1, 123, 99],
+	[7, 73, 45, 3, 74, 46],
+	[15, 43, 19, 2, 44, 20],
+	[3, 45, 15, 13, 46, 16],
+
+	// 17
+	[1, 135, 107, 5, 136, 108],
+	[10, 74, 46, 1, 75, 47],
+	[1, 50, 22, 15, 51, 23],
+	[2, 42, 14, 17, 43, 15],
+
+	// 18
+	[5, 150, 120, 1, 151, 121],
+	[9, 69, 43, 4, 70, 44],
+	[17, 50, 22, 1, 51, 23],
+	[2, 42, 14, 19, 43, 15],
+
+	// 19
+	[3, 141, 113, 4, 142, 114],
+	[3, 70, 44, 11, 71, 45],
+	[17, 47, 21, 4, 48, 22],
+	[9, 39, 13, 16, 40, 14],
+
+	// 20
+	[3, 135, 107, 5, 136, 108],
+	[3, 67, 41, 13, 68, 42],
+	[15, 54, 24, 5, 55, 25],
+	[15, 43, 15, 10, 44, 16],
+
+	// 21
+	[4, 144, 116, 4, 145, 117],
+	[17, 68, 42],
+	[17, 50, 22, 6, 51, 23],
+	[19, 46, 16, 6, 47, 17],
+
+	// 22
+	[2, 139, 111, 7, 140, 112],
+	[17, 74, 46],
+	[7, 54, 24, 16, 55, 25],
+	[34, 37, 13],
+
+	// 23
+	[4, 151, 121, 5, 152, 122],
+	[4, 75, 47, 14, 76, 48],
+	[11, 54, 24, 14, 55, 25],
+	[16, 45, 15, 14, 46, 16],
+
+	// 24
+	[6, 147, 117, 4, 148, 118],
+	[6, 73, 45, 14, 74, 46],
+	[11, 54, 24, 16, 55, 25],
+	[30, 46, 16, 2, 47, 17],
+
+	// 25
+	[8, 132, 106, 4, 133, 107],
+	[8, 75, 47, 13, 76, 48],
+	[7, 54, 24, 22, 55, 25],
+	[22, 45, 15, 13, 46, 16],
+
+	// 26
+	[10, 142, 114, 2, 143, 115],
+	[19, 74, 46, 4, 75, 47],
+	[28, 50, 22, 6, 51, 23],
+	[33, 46, 16, 4, 47, 17],
+
+	// 27
+	[8, 152, 122, 4, 153, 123],
+	[22, 73, 45, 3, 74, 46],
+	[8, 53, 23, 26, 54, 24],
+	[12, 45, 15, 28, 46, 16],
+
+	// 28
+	[3, 147, 117, 10, 148, 118],
+	[3, 73, 45, 23, 74, 46],
+	[4, 54, 24, 31, 55, 25],
+	[11, 45, 15, 31, 46, 16],
+
+	// 29
+	[7, 146, 116, 7, 147, 117],
+	[21, 73, 45, 7, 74, 46],
+	[1, 53, 23, 37, 54, 24],
+	[19, 45, 15, 26, 46, 16],
+
+	// 30
+	[5, 145, 115, 10, 146, 116],
+	[19, 75, 47, 10, 76, 48],
+	[15, 54, 24, 25, 55, 25],
+	[23, 45, 15, 25, 46, 16],
+
+	// 31
+	[13, 145, 115, 3, 146, 116],
+	[2, 74, 46, 29, 75, 47],
+	[42, 54, 24, 1, 55, 25],
+	[23, 45, 15, 28, 46, 16],
+
+	// 32
+	[17, 145, 115],
+	[10, 74, 46, 23, 75, 47],
+	[10, 54, 24, 35, 55, 25],
+	[19, 45, 15, 35, 46, 16],
+
+	// 33
+	[17, 145, 115, 1, 146, 116],
+	[14, 74, 46, 21, 75, 47],
+	[29, 54, 24, 19, 55, 25],
+	[11, 45, 15, 46, 46, 16],
+
+	// 34
+	[13, 145, 115, 6, 146, 116],
+	[14, 74, 46, 23, 75, 47],
+	[44, 54, 24, 7, 55, 25],
+	[59, 46, 16, 1, 47, 17],
+
+	// 35
+	[12, 151, 121, 7, 152, 122],
+	[12, 75, 47, 26, 76, 48],
+	[39, 54, 24, 14, 55, 25],
+	[22, 45, 15, 41, 46, 16],
+
+	// 36
+	[6, 151, 121, 14, 152, 122],
+	[6, 75, 47, 34, 76, 48],
+	[46, 54, 24, 10, 55, 25],
+	[2, 45, 15, 64, 46, 16],
+
+	// 37
+	[17, 152, 122, 4, 153, 123],
+	[29, 74, 46, 14, 75, 47],
+	[49, 54, 24, 10, 55, 25],
+	[24, 45, 15, 46, 46, 16],
+
+	// 38
+	[4, 152, 122, 18, 153, 123],
+	[13, 74, 46, 32, 75, 47],
+	[48, 54, 24, 14, 55, 25],
+	[42, 45, 15, 32, 46, 16],
+
+	// 39
+	[20, 147, 117, 4, 148, 118],
+	[40, 75, 47, 7, 76, 48],
+	[43, 54, 24, 22, 55, 25],
+	[10, 45, 15, 67, 46, 16],
+
+	// 40
+	[19, 148, 118, 6, 149, 119],
+	[18, 75, 47, 31, 76, 48],
+	[34, 54, 24, 34, 55, 25],
+	[20, 45, 15, 61, 46, 16]
+];
+
+QRRSBlock.getRSBlocks = function(typeNumber, errorCorrectLevel) {
+	
+	var rsBlock = QRRSBlock.getRsBlockTable(typeNumber, errorCorrectLevel);
+	
+	if (rsBlock === undefined) {
+		throw new Error("bad rs block @ typeNumber:" + typeNumber + "/errorCorrectLevel:" + errorCorrectLevel);
+	}
+
+	var length = rsBlock.length / 3;
+	
+	var list = [];
+	
+	for (var i = 0; i < length; i++) {
+
+		var count = rsBlock[i * 3 + 0];
+		var totalCount = rsBlock[i * 3 + 1];
+		var dataCount  = rsBlock[i * 3 + 2];
+
+		for (var j = 0; j < count; j++) {
+			list.push(new QRRSBlock(totalCount, dataCount) );	
+		}
+	}
+	
+	return list;
+};
+
+QRRSBlock.getRsBlockTable = function(typeNumber, errorCorrectLevel) {
+
+	switch(errorCorrectLevel) {
+	case QRErrorCorrectLevel.L :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 0];
+	case QRErrorCorrectLevel.M :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 1];
+	case QRErrorCorrectLevel.Q :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 2];
+	case QRErrorCorrectLevel.H :
+		return QRRSBlock.RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 3];
+	default :
+		return undefined;
+	}
+};
+
+module.exports = QRRSBlock;
+
+};
+M["QRUtil"]=function(module,exports,require){
+var QRMode = require('./QRMode');
+var QRPolynomial = require('./QRPolynomial');
+var QRMath = require('./QRMath');
+var QRMaskPattern = require('./QRMaskPattern');
+
+var QRUtil = {
+
+    PATTERN_POSITION_TABLE : [
+        [],
+        [6, 18],
+        [6, 22],
+        [6, 26],
+        [6, 30],
+        [6, 34],
+        [6, 22, 38],
+        [6, 24, 42],
+        [6, 26, 46],
+        [6, 28, 50],
+        [6, 30, 54],        
+        [6, 32, 58],
+        [6, 34, 62],
+        [6, 26, 46, 66],
+        [6, 26, 48, 70],
+        [6, 26, 50, 74],
+        [6, 30, 54, 78],
+        [6, 30, 56, 82],
+        [6, 30, 58, 86],
+        [6, 34, 62, 90],
+        [6, 28, 50, 72, 94],
+        [6, 26, 50, 74, 98],
+        [6, 30, 54, 78, 102],
+        [6, 28, 54, 80, 106],
+        [6, 32, 58, 84, 110],
+        [6, 30, 58, 86, 114],
+        [6, 34, 62, 90, 118],
+        [6, 26, 50, 74, 98, 122],
+        [6, 30, 54, 78, 102, 126],
+        [6, 26, 52, 78, 104, 130],
+        [6, 30, 56, 82, 108, 134],
+        [6, 34, 60, 86, 112, 138],
+        [6, 30, 58, 86, 114, 142],
+        [6, 34, 62, 90, 118, 146],
+        [6, 30, 54, 78, 102, 126, 150],
+        [6, 24, 50, 76, 102, 128, 154],
+        [6, 28, 54, 80, 106, 132, 158],
+        [6, 32, 58, 84, 110, 136, 162],
+        [6, 26, 54, 82, 110, 138, 166],
+        [6, 30, 58, 86, 114, 142, 170]
+    ],
+
+    G15 : (1 << 10) | (1 << 8) | (1 << 5) | (1 << 4) | (1 << 2) | (1 << 1) | (1 << 0),
+    G18 : (1 << 12) | (1 << 11) | (1 << 10) | (1 << 9) | (1 << 8) | (1 << 5) | (1 << 2) | (1 << 0),
+    G15_MASK : (1 << 14) | (1 << 12) | (1 << 10)    | (1 << 4) | (1 << 1),
+
+    getBCHTypeInfo : function(data) {
+        var d = data << 10;
+        while (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G15) >= 0) {
+            d ^= (QRUtil.G15 << (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G15) ) );    
+        }
+        return ( (data << 10) | d) ^ QRUtil.G15_MASK;
+    },
+
+    getBCHTypeNumber : function(data) {
+        var d = data << 12;
+        while (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G18) >= 0) {
+            d ^= (QRUtil.G18 << (QRUtil.getBCHDigit(d) - QRUtil.getBCHDigit(QRUtil.G18) ) );    
+        }
+        return (data << 12) | d;
+    },
+
+    getBCHDigit : function(data) {
+
+        var digit = 0;
+
+        while (data !== 0) {
+            digit++;
+            data >>>= 1;
+        }
+
+        return digit;
+    },
+
+    getPatternPosition : function(typeNumber) {
+        return QRUtil.PATTERN_POSITION_TABLE[typeNumber - 1];
+    },
+
+    getMask : function(maskPattern, i, j) {
+        
+        switch (maskPattern) {
+            
+        case QRMaskPattern.PATTERN000 : return (i + j) % 2 === 0;
+        case QRMaskPattern.PATTERN001 : return i % 2 === 0;
+        case QRMaskPattern.PATTERN010 : return j % 3 === 0;
+        case QRMaskPattern.PATTERN011 : return (i + j) % 3 === 0;
+        case QRMaskPattern.PATTERN100 : return (Math.floor(i / 2) + Math.floor(j / 3) ) % 2 === 0;
+        case QRMaskPattern.PATTERN101 : return (i * j) % 2 + (i * j) % 3 === 0;
+        case QRMaskPattern.PATTERN110 : return ( (i * j) % 2 + (i * j) % 3) % 2 === 0;
+        case QRMaskPattern.PATTERN111 : return ( (i * j) % 3 + (i + j) % 2) % 2 === 0;
+
+        default :
+            throw new Error("bad maskPattern:" + maskPattern);
+        }
+    },
+
+    getErrorCorrectPolynomial : function(errorCorrectLength) {
+
+        var a = new QRPolynomial([1], 0);
+
+        for (var i = 0; i < errorCorrectLength; i++) {
+            a = a.multiply(new QRPolynomial([1, QRMath.gexp(i)], 0) );
+        }
+
+        return a;
+    },
+
+    getLengthInBits : function(mode, type) {
+
+        if (1 <= type && type < 10) {
+
+            // 1 - 9
+
+            switch(mode) {
+            case QRMode.MODE_NUMBER     : return 10;
+            case QRMode.MODE_ALPHA_NUM  : return 9;
+            case QRMode.MODE_8BIT_BYTE  : return 8;
+            case QRMode.MODE_KANJI      : return 8;
+            default :
+                throw new Error("mode:" + mode);
+            }
+
+        } else if (type < 27) {
+
+            // 10 - 26
+
+            switch(mode) {
+            case QRMode.MODE_NUMBER     : return 12;
+            case QRMode.MODE_ALPHA_NUM  : return 11;
+            case QRMode.MODE_8BIT_BYTE  : return 16;
+            case QRMode.MODE_KANJI      : return 10;
+            default :
+                throw new Error("mode:" + mode);
+            }
+
+        } else if (type < 41) {
+
+            // 27 - 40
+
+            switch(mode) {
+            case QRMode.MODE_NUMBER     : return 14;
+            case QRMode.MODE_ALPHA_NUM  : return 13;
+            case QRMode.MODE_8BIT_BYTE  : return 16;
+            case QRMode.MODE_KANJI      : return 12;
+            default :
+                throw new Error("mode:" + mode);
+            }
+
+        } else {
+            throw new Error("type:" + type);
+        }
+    },
+
+    getLostPoint : function(qrCode) {
+        
+        var moduleCount = qrCode.getModuleCount();
+        var lostPoint = 0;
+        var row = 0; 
+        var col = 0;
+
+        
+        // LEVEL1
+        
+        for (row = 0; row < moduleCount; row++) {
+
+            for (col = 0; col < moduleCount; col++) {
+
+                var sameCount = 0;
+                var dark = qrCode.isDark(row, col);
+
+                for (var r = -1; r <= 1; r++) {
+
+                    if (row + r < 0 || moduleCount <= row + r) {
+                        continue;
+                    }
+
+                    for (var c = -1; c <= 1; c++) {
+
+                        if (col + c < 0 || moduleCount <= col + c) {
+                            continue;
+                        }
+
+                        if (r === 0 && c === 0) {
+                            continue;
+                        }
+
+                        if (dark === qrCode.isDark(row + r, col + c) ) {
+                            sameCount++;
+                        }
+                    }
+                }
+
+                if (sameCount > 5) {
+                    lostPoint += (3 + sameCount - 5);
+                }
+            }
+        }
+
+        // LEVEL2
+
+        for (row = 0; row < moduleCount - 1; row++) {
+            for (col = 0; col < moduleCount - 1; col++) {
+                var count = 0;
+                if (qrCode.isDark(row,     col    ) ) count++;
+                if (qrCode.isDark(row + 1, col    ) ) count++;
+                if (qrCode.isDark(row,     col + 1) ) count++;
+                if (qrCode.isDark(row + 1, col + 1) ) count++;
+                if (count === 0 || count === 4) {
+                    lostPoint += 3;
+                }
+            }
+        }
+
+        // LEVEL3
+
+        for (row = 0; row < moduleCount; row++) {
+            for (col = 0; col < moduleCount - 6; col++) {
+                if (qrCode.isDark(row, col) && 
+                        !qrCode.isDark(row, col + 1) && 
+                         qrCode.isDark(row, col + 2) && 
+                         qrCode.isDark(row, col + 3) && 
+                         qrCode.isDark(row, col + 4) && 
+                        !qrCode.isDark(row, col + 5) && 
+                         qrCode.isDark(row, col + 6) ) {
+                    lostPoint += 40;
+                }
+            }
+        }
+
+        for (col = 0; col < moduleCount; col++) {
+            for (row = 0; row < moduleCount - 6; row++) {
+                if (qrCode.isDark(row, col) &&
+                        !qrCode.isDark(row + 1, col) &&
+                         qrCode.isDark(row + 2, col) &&
+                         qrCode.isDark(row + 3, col) &&
+                         qrCode.isDark(row + 4, col) &&
+                        !qrCode.isDark(row + 5, col) &&
+                         qrCode.isDark(row + 6, col) ) {
+                    lostPoint += 40;
+                }
+            }
+        }
+
+        // LEVEL4
+        
+        var darkCount = 0;
+
+        for (col = 0; col < moduleCount; col++) {
+            for (row = 0; row < moduleCount; row++) {
+                if (qrCode.isDark(row, col) ) {
+                    darkCount++;
+                }
+            }
+        }
+        
+        var ratio = Math.abs(100 * darkCount / moduleCount / moduleCount - 50) / 5;
+        lostPoint += ratio * 10;
+
+        return lostPoint;       
+    }
+
+};
+
+module.exports = QRUtil;
+
+};
+M["index"]=function(module,exports,require){
+//---------------------------------------------------------------------
+// QRCode for JavaScript
+//
+// Copyright (c) 2009 Kazuhiko Arase
+//
+// URL: http://www.d-project.com/
+//
+// Licensed under the MIT license:
+//   http://www.opensource.org/licenses/mit-license.php
+//
+// The word "QR Code" is registered trademark of 
+// DENSO WAVE INCORPORATED
+//   http://www.denso-wave.com/qrcode/faqpatent-e.html
+//
+//---------------------------------------------------------------------
+// Modified to work in node for this project (and some refactoring)
+//---------------------------------------------------------------------
+
+var QR8bitByte = require('./QR8bitByte');
+var QRUtil = require('./QRUtil');
+var QRPolynomial = require('./QRPolynomial');
+var QRRSBlock = require('./QRRSBlock');
+var QRBitBuffer = require('./QRBitBuffer');
+
+function QRCode(typeNumber, errorCorrectLevel) {
+	this.typeNumber = typeNumber;
+	this.errorCorrectLevel = errorCorrectLevel;
+	this.modules = null;
+	this.moduleCount = 0;
+	this.dataCache = null;
+	this.dataList = [];
+}
+
+QRCode.prototype = {
+	
+	addData : function(data) {
+		var newData = new QR8bitByte(data);
+		this.dataList.push(newData);
+		this.dataCache = null;
+	},
+	
+	isDark : function(row, col) {
+		if (row < 0 || this.moduleCount <= row || col < 0 || this.moduleCount <= col) {
+			throw new Error(row + "," + col);
+		}
+		return this.modules[row][col];
+	},
+
+	getModuleCount : function() {
+		return this.moduleCount;
+	},
+	
+	make : function() {
+		// Calculate automatically typeNumber if provided is < 1
+		if (this.typeNumber < 1 ){
+			var typeNumber = 1;
+			for (typeNumber = 1; typeNumber < 40; typeNumber++) {
+				var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, this.errorCorrectLevel);
+
+				var buffer = new QRBitBuffer();
+				var totalDataCount = 0;
+				for (var i = 0; i < rsBlocks.length; i++) {
+					totalDataCount += rsBlocks[i].dataCount;
+				}
+
+				for (var x = 0; x < this.dataList.length; x++) {
+					var data = this.dataList[x];
+					buffer.put(data.mode, 4);
+					buffer.put(data.getLength(), QRUtil.getLengthInBits(data.mode, typeNumber) );
+					data.write(buffer);
+				}
+				if (buffer.getLengthInBits() <= totalDataCount * 8)
+					break;
+			}
+			this.typeNumber = typeNumber;
+		}
+		this.makeImpl(false, this.getBestMaskPattern() );
+	},
+	
+	makeImpl : function(test, maskPattern) {
+		
+		this.moduleCount = this.typeNumber * 4 + 17;
+		this.modules = new Array(this.moduleCount);
+		
+		for (var row = 0; row < this.moduleCount; row++) {
+			
+			this.modules[row] = new Array(this.moduleCount);
+			
+			for (var col = 0; col < this.moduleCount; col++) {
+				this.modules[row][col] = null;//(col + row) % 3;
+			}
+		}
+	
+		this.setupPositionProbePattern(0, 0);
+		this.setupPositionProbePattern(this.moduleCount - 7, 0);
+		this.setupPositionProbePattern(0, this.moduleCount - 7);
+		this.setupPositionAdjustPattern();
+		this.setupTimingPattern();
+		this.setupTypeInfo(test, maskPattern);
+		
+		if (this.typeNumber >= 7) {
+			this.setupTypeNumber(test);
+		}
+	
+		if (this.dataCache === null) {
+			this.dataCache = QRCode.createData(this.typeNumber, this.errorCorrectLevel, this.dataList);
+		}
+	
+		this.mapData(this.dataCache, maskPattern);
+	},
+
+	setupPositionProbePattern : function(row, col)  {
+		
+		for (var r = -1; r <= 7; r++) {
+			
+			if (row + r <= -1 || this.moduleCount <= row + r) continue;
+			
+			for (var c = -1; c <= 7; c++) {
+				
+				if (col + c <= -1 || this.moduleCount <= col + c) continue;
+				
+				if ( (0 <= r && r <= 6 && (c === 0 || c === 6) ) || 
+                     (0 <= c && c <= 6 && (r === 0 || r === 6) ) || 
+                     (2 <= r && r <= 4 && 2 <= c && c <= 4) ) {
+					this.modules[row + r][col + c] = true;
+				} else {
+					this.modules[row + r][col + c] = false;
+				}
+			}		
+		}		
+	},
+	
+	getBestMaskPattern : function() {
+	
+		var minLostPoint = 0;
+		var pattern = 0;
+	
+		for (var i = 0; i < 8; i++) {
+			
+			this.makeImpl(true, i);
+	
+			var lostPoint = QRUtil.getLostPoint(this);
+	
+			if (i === 0 || minLostPoint >  lostPoint) {
+				minLostPoint = lostPoint;
+				pattern = i;
+			}
+		}
+	
+		return pattern;
+	},
+	
+	createMovieClip : function(target_mc, instance_name, depth) {
+	
+		var qr_mc = target_mc.createEmptyMovieClip(instance_name, depth);
+		var cs = 1;
+	
+		this.make();
+
+		for (var row = 0; row < this.modules.length; row++) {
+			
+			var y = row * cs;
+			
+			for (var col = 0; col < this.modules[row].length; col++) {
+	
+				var x = col * cs;
+				var dark = this.modules[row][col];
+			
+				if (dark) {
+					qr_mc.beginFill(0, 100);
+					qr_mc.moveTo(x, y);
+					qr_mc.lineTo(x + cs, y);
+					qr_mc.lineTo(x + cs, y + cs);
+					qr_mc.lineTo(x, y + cs);
+					qr_mc.endFill();
+				}
+			}
+		}
+		
+		return qr_mc;
+	},
+
+	setupTimingPattern : function() {
+		
+		for (var r = 8; r < this.moduleCount - 8; r++) {
+			if (this.modules[r][6] !== null) {
+				continue;
+			}
+			this.modules[r][6] = (r % 2 === 0);
+		}
+	
+		for (var c = 8; c < this.moduleCount - 8; c++) {
+			if (this.modules[6][c] !== null) {
+				continue;
+			}
+			this.modules[6][c] = (c % 2 === 0);
+		}
+	},
+	
+	setupPositionAdjustPattern : function() {
+	
+		var pos = QRUtil.getPatternPosition(this.typeNumber);
+		
+		for (var i = 0; i < pos.length; i++) {
+		
+			for (var j = 0; j < pos.length; j++) {
+			
+				var row = pos[i];
+				var col = pos[j];
+				
+				if (this.modules[row][col] !== null) {
+					continue;
+				}
+				
+				for (var r = -2; r <= 2; r++) {
+				
+					for (var c = -2; c <= 2; c++) {
+					
+						if (Math.abs(r) === 2 || 
+                            Math.abs(c) === 2 ||
+                            (r === 0 && c === 0) ) {
+							this.modules[row + r][col + c] = true;
+						} else {
+							this.modules[row + r][col + c] = false;
+						}
+					}
+				}
+			}
+		}
+	},
+	
+	setupTypeNumber : function(test) {
+	
+		var bits = QRUtil.getBCHTypeNumber(this.typeNumber);
+        var mod;
+	
+		for (var i = 0; i < 18; i++) {
+			mod = (!test && ( (bits >> i) & 1) === 1);
+			this.modules[Math.floor(i / 3)][i % 3 + this.moduleCount - 8 - 3] = mod;
+		}
+	
+		for (var x = 0; x < 18; x++) {
+			mod = (!test && ( (bits >> x) & 1) === 1);
+			this.modules[x % 3 + this.moduleCount - 8 - 3][Math.floor(x / 3)] = mod;
+		}
+	},
+	
+	setupTypeInfo : function(test, maskPattern) {
+	
+		var data = (this.errorCorrectLevel << 3) | maskPattern;
+		var bits = QRUtil.getBCHTypeInfo(data);
+        var mod;
+	
+		// vertical		
+		for (var v = 0; v < 15; v++) {
+	
+			mod = (!test && ( (bits >> v) & 1) === 1);
+	
+			if (v < 6) {
+				this.modules[v][8] = mod;
+			} else if (v < 8) {
+				this.modules[v + 1][8] = mod;
+			} else {
+				this.modules[this.moduleCount - 15 + v][8] = mod;
+			}
+		}
+	
+		// horizontal
+		for (var h = 0; h < 15; h++) {
+	
+			mod = (!test && ( (bits >> h) & 1) === 1);
+			
+			if (h < 8) {
+				this.modules[8][this.moduleCount - h - 1] = mod;
+			} else if (h < 9) {
+				this.modules[8][15 - h - 1 + 1] = mod;
+			} else {
+				this.modules[8][15 - h - 1] = mod;
+			}
+		}
+	
+		// fixed module
+		this.modules[this.moduleCount - 8][8] = (!test);
+	
+	},
+	
+	mapData : function(data, maskPattern) {
+		
+		var inc = -1;
+		var row = this.moduleCount - 1;
+		var bitIndex = 7;
+		var byteIndex = 0;
+		
+		for (var col = this.moduleCount - 1; col > 0; col -= 2) {
+	
+			if (col === 6) col--;
+	
+			while (true) {
+	
+				for (var c = 0; c < 2; c++) {
+					
+					if (this.modules[row][col - c] === null) {
+						
+						var dark = false;
+	
+						if (byteIndex < data.length) {
+							dark = ( ( (data[byteIndex] >>> bitIndex) & 1) === 1);
+						}
+	
+						var mask = QRUtil.getMask(maskPattern, row, col - c);
+	
+						if (mask) {
+							dark = !dark;
+						}
+						
+						this.modules[row][col - c] = dark;
+						bitIndex--;
+	
+						if (bitIndex === -1) {
+							byteIndex++;
+							bitIndex = 7;
+						}
+					}
+				}
+								
+				row += inc;
+	
+				if (row < 0 || this.moduleCount <= row) {
+					row -= inc;
+					inc = -inc;
+					break;
+				}
+			}
+		}
+		
+	}
+
+};
+
+QRCode.PAD0 = 0xEC;
+QRCode.PAD1 = 0x11;
+
+QRCode.createData = function(typeNumber, errorCorrectLevel, dataList) {
+	
+	var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, errorCorrectLevel);
+	
+	var buffer = new QRBitBuffer();
+	
+	for (var i = 0; i < dataList.length; i++) {
+		var data = dataList[i];
+		buffer.put(data.mode, 4);
+		buffer.put(data.getLength(), QRUtil.getLengthInBits(data.mode, typeNumber) );
+		data.write(buffer);
+	}
+
+	// calc num max data.
+	var totalDataCount = 0;
+	for (var x = 0; x < rsBlocks.length; x++) {
+		totalDataCount += rsBlocks[x].dataCount;
+	}
+
+	if (buffer.getLengthInBits() > totalDataCount * 8) {
+		throw new Error("code length overflow. (" + 
+            buffer.getLengthInBits() + 
+            ">" +  
+            totalDataCount * 8 + 
+            ")");
+	}
+
+	// end code
+	if (buffer.getLengthInBits() + 4 <= totalDataCount * 8) {
+		buffer.put(0, 4);
+	}
+
+	// padding
+	while (buffer.getLengthInBits() % 8 !== 0) {
+		buffer.putBit(false);
+	}
+
+	// padding
+	while (true) {
+		
+		if (buffer.getLengthInBits() >= totalDataCount * 8) {
+			break;
+		}
+		buffer.put(QRCode.PAD0, 8);
+		
+		if (buffer.getLengthInBits() >= totalDataCount * 8) {
+			break;
+		}
+		buffer.put(QRCode.PAD1, 8);
+	}
+
+	return QRCode.createBytes(buffer, rsBlocks);
+};
+
+QRCode.createBytes = function(buffer, rsBlocks) {
+
+	var offset = 0;
+	
+	var maxDcCount = 0;
+	var maxEcCount = 0;
+	
+	var dcdata = new Array(rsBlocks.length);
+	var ecdata = new Array(rsBlocks.length);
+	
+	for (var r = 0; r < rsBlocks.length; r++) {
+
+		var dcCount = rsBlocks[r].dataCount;
+		var ecCount = rsBlocks[r].totalCount - dcCount;
+
+		maxDcCount = Math.max(maxDcCount, dcCount);
+		maxEcCount = Math.max(maxEcCount, ecCount);
+		
+		dcdata[r] = new Array(dcCount);
+		
+		for (var i = 0; i < dcdata[r].length; i++) {
+			dcdata[r][i] = 0xff & buffer.buffer[i + offset];
+		}
+		offset += dcCount;
+		
+		var rsPoly = QRUtil.getErrorCorrectPolynomial(ecCount);
+		var rawPoly = new QRPolynomial(dcdata[r], rsPoly.getLength() - 1);
+
+		var modPoly = rawPoly.mod(rsPoly);
+		ecdata[r] = new Array(rsPoly.getLength() - 1);
+		for (var x = 0; x < ecdata[r].length; x++) {
+            var modIndex = x + modPoly.getLength() - ecdata[r].length;
+			ecdata[r][x] = (modIndex >= 0)? modPoly.get(modIndex) : 0;
+		}
+
+	}
+	
+	var totalCodeCount = 0;
+	for (var y = 0; y < rsBlocks.length; y++) {
+		totalCodeCount += rsBlocks[y].totalCount;
+	}
+
+	var data = new Array(totalCodeCount);
+	var index = 0;
+
+	for (var z = 0; z < maxDcCount; z++) {
+		for (var s = 0; s < rsBlocks.length; s++) {
+			if (z < dcdata[s].length) {
+				data[index++] = dcdata[s][z];
+			}
+		}
+	}
+
+	for (var xx = 0; xx < maxEcCount; xx++) {
+		for (var t = 0; t < rsBlocks.length; t++) {
+			if (xx < ecdata[t].length) {
+				data[index++] = ecdata[t][xx];
+			}
+		}
+	}
+
+	return data;
+
+};
+
+module.exports = QRCode;
+
+};
+window.SPQR={QRCode:R("index"),Level:R("QRErrorCorrectLevel")};})();
+</script>
+<script>
+"use strict";
+/* =========================================================
+   SARAPAN PINTAR — prototipe edukasi gizi sarapan (tanpa backend)
+   Struktur: DATA → PENYIMPANAN → MESIN GIZI → TARGET → UI
+   ========================================================= */
+
+/* ---------- 1. DATA ACUAN ---------- */
+const SCHEMA_VERSION = 1;
+const SRC = {
+  TKPI: "TKPI 2017, Kemenkes RI (panganku.org)",
+  USDA: "USDA FoodData Central, SR Legacy",
+  SIM: "SIMULASI — belum diverifikasi"
+};
+// Nilai per 100 g bagian yang dapat dimakan (BDD). status: "rujukan" = dikutip dari sumber; "simulasi" = contoh.
+// state: "mentah" | "matang". Masukkan berat sesuai kondisi itu.
+const DEFAULT_FOODS = [
+  {id:"nasi-putih",name:"Nasi putih",cat:"pokok",state:"matang",kcal:180,protein:3.0,carb:39.8,fat:0.3,fiber:0.2,bdd:100,src:SRC.TKPI,status:"rujukan",local:true,def:150,note:"Nasi sudah matang; timbang nasi matang."},
+  {id:"telur-ayam",name:"Telur ayam ras",cat:"lauk",state:"mentah",kcal:154,protein:12.4,carb:0.7,fat:10.8,fiber:0,bdd:90,src:SRC.TKPI,status:"rujukan",local:true,def:55,note:"Berat isi telur tanpa cangkang (±55 g per butir sedang). Merebus tidak mengubah berat secara berarti; minyak goreng dicatat terpisah."},
+  {id:"tempe",name:"Tempe kedelai murni",cat:"lauk",state:"mentah",kcal:201,protein:20.8,carb:13.5,fat:8.8,fiber:1.4,bdd:100,src:SRC.TKPI,status:"rujukan",local:true,def:50,note:"Timbang sebelum digoreng/dibacem. Minyak terserap dicatat terpisah."},
+  {id:"tahu",name:"Tahu",cat:"lauk",state:"mentah",kcal:80,protein:10.9,carb:0.8,fat:4.7,fiber:0.1,bdd:100,src:SRC.TKPI,status:"rujukan",local:true,def:50,note:"Timbang sebelum dimasak."},
+  {id:"bayam",name:"Bayam",cat:"sayur",state:"mentah",kcal:23,protein:2.9,carb:3.6,fat:0.4,fiber:2.2,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:50,note:"Berat daun mentah yang sudah disiangi."},
+  {id:"kangkung",name:"Kangkung",cat:"sayur",state:"mentah",kcal:19,protein:2.6,carb:3.1,fat:0.2,fiber:2.1,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:50,note:"Berat mentah yang sudah disiangi."},
+  {id:"tauge",name:"Tauge kacang hijau",cat:"sayur",state:"mentah",kcal:30,protein:3.0,carb:5.9,fat:0.2,fiber:1.8,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:30,note:"Berat mentah."},
+  {id:"kol",name:"Kubis / kol",cat:"sayur",state:"mentah",kcal:25,protein:1.3,carb:5.8,fat:0.1,fiber:2.5,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:30,note:"Berat mentah."},
+  {id:"wortel",name:"Wortel",cat:"sayur",state:"mentah",kcal:41,protein:0.9,carb:9.6,fat:0.2,fiber:2.8,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:30,note:"Berat mentah tanpa kulit."},
+  {id:"tomat",name:"Tomat merah",cat:"sayur",state:"mentah",kcal:18,protein:0.9,carb:3.9,fat:0.2,fiber:1.2,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:20,note:"Berat mentah."},
+  {id:"kacang-tanah",name:"Kacang tanah (bumbu pecel)",cat:"kacang",state:"mentah",kcal:567,protein:25.8,carb:16.1,fat:49.2,fiber:8.5,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:20,note:"Berat kacang mentah/sangrai sebelum diulek. Gula merah & cabai bumbu belum dihitung."},
+  {id:"edamame",name:"Edamame Jember (rebus)",cat:"kacang",state:"matang",kcal:121,protein:11.9,carb:8.9,fat:5.2,fiber:5.2,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:75,note:"Biji edamame matang tanpa kulit polong."},
+  {id:"ubi-jalar",name:"Ubi jalar",cat:"pokok",state:"mentah",kcal:86,protein:1.6,carb:20.1,fat:0.1,fiber:3.0,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:150,note:"Timbang ubi mentah tanpa kulit sebelum direbus."},
+  {id:"singkong",name:"Singkong",cat:"pokok",state:"mentah",kcal:160,protein:1.4,carb:38.1,fat:0.3,fiber:1.8,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:100,note:"Timbang mentah tanpa kulit."},
+  {id:"jagung-manis",name:"Jagung manis (pipil)",cat:"pokok",state:"mentah",kcal:86,protein:3.3,carb:18.7,fat:1.4,fiber:2.0,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:100,note:"Berat biji pipil mentah."},
+  {id:"pisang",name:"Pisang (daging buah)",cat:"buah",state:"mentah",kcal:89,protein:1.1,carb:22.8,fat:0.3,fiber:2.6,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:100,note:"Berat daging buah tanpa kulit."},
+  {id:"jeruk",name:"Jeruk (Semboro)",cat:"buah",state:"mentah",kcal:47,protein:0.9,carb:11.8,fat:0.1,fiber:2.4,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:100,note:"Nilai jeruk manis umum (bukan varietas Semboro khusus). Berat daging buah."},
+  {id:"susu-sapi",name:"Susu sapi segar",cat:"minum",state:"matang",kcal:61,protein:3.2,carb:4.8,fat:3.3,fiber:0,bdd:100,src:SRC.USDA,status:"rujukan",local:false,def:200,note:"Susu utuh (whole milk). 1 gelas ±200 g."},
+  {id:"ayam-dada",name:"Daging ayam bagian dada",cat:"lauk",state:"mentah",kcal:120,protein:22.5,carb:0,fat:2.6,fiber:0,bdd:100,src:SRC.USDA,status:"rujukan",local:false,def:50,note:"Tanpa kulit, ditimbang mentah."},
+  {id:"minyak-sawit",name:"Minyak goreng (terserap)",cat:"lemak",state:"matang",kcal:884,protein:0,carb:0,fat:100,fiber:0,bdd:100,src:SRC.USDA,status:"rujukan",local:false,def:5,note:"Isi dengan perkiraan minyak yang TERSERAP ke makanan, bukan minyak di wajan."},
+  {id:"tape-singkong",name:"Tape singkong (prol tape)",cat:"pokok",state:"matang",kcal:173,protein:0.5,carb:42.5,fat:0.1,fiber:null,bdd:100,src:SRC.SIM,status:"simulasi",local:true,def:50,note:"DATA SIMULASI untuk contoh. Serat belum tersedia. Ganti dengan data TKPI sebelum dipakai serius."}
+];
+const DEFAULT_MENUS = [
+  {id:"menu-nasi-telur",name:"Nasi Telur Ceplok & Bayam",desc:"Nasi hangat, telur ceplok, dan tumis bayam. Cepat dibuat sebelum berangkat sekolah.",cost:7000,
+   items:[{foodId:"nasi-putih",grams:150},{foodId:"telur-ayam",grams:55},{foodId:"bayam",grams:50},{foodId:"minyak-sawit",grams:5}],
+   steps:"Goreng telur dengan sedikit minyak. Tumis bayam sebentar dengan bawang putih. Sajikan dengan nasi."},
+  {id:"menu-nasi-pecel",name:"Nasi Pecel Jember",desc:"Sayur rebus dengan bumbu kacang dan tempe goreng, sarapan khas Jawa Timur.",cost:10000,
+   items:[{foodId:"nasi-putih",grams:150},{foodId:"bayam",grams:40},{foodId:"kangkung",grams:40},{foodId:"tauge",grams:30},{foodId:"kacang-tanah",grams:20},{foodId:"tempe",grams:50},{foodId:"minyak-sawit",grams:5}],
+   steps:"Rebus bayam, kangkung, dan tauge. Ulek kacang sangrai dengan bumbu. Goreng tempe. Siram sayur dengan bumbu pecel."},
+  {id:"menu-tempe-tahu",name:"Nasi Tempe Tahu & Lalapan",desc:"Lauk nabati tempe dan tahu dengan lalapan kol dan tomat.",cost:8000,
+   items:[{foodId:"nasi-putih",grams:150},{foodId:"tempe",grams:50},{foodId:"tahu",grams:50},{foodId:"kol",grams:30},{foodId:"tomat",grams:20},{foodId:"minyak-sawit",grams:7}],
+   steps:"Goreng tempe dan tahu. Iris kol dan tomat sebagai lalapan. Sajikan dengan nasi dan sambal."},
+  {id:"menu-ubi-edamame",name:"Ubi Rebus, Edamame & Jeruk",desc:"Alternatif sarapan tanpa nasi dengan edamame khas Jember.",cost:9000,
+   items:[{foodId:"ubi-jalar",grams:150},{foodId:"edamame",grams:75},{foodId:"jeruk",grams:100}],
+   steps:"Kupas dan rebus ubi 20 menit. Rebus edamame 5 menit dengan sedikit garam lalu kupas. Sajikan dengan jeruk."},
+  {id:"menu-jagung-pisang",name:"Jagung, Pisang & Tape",desc:"Sarapan ringan dari pangan lokal. Mengandung bahan berdata SIMULASI.",cost:6000,
+   items:[{foodId:"jagung-manis",grams:100},{foodId:"pisang",grams:100},{foodId:"tape-singkong",grams:50}],
+   steps:"Rebus jagung pipil 10 menit. Sajikan dengan pisang dan tape."},
+  {id:"menu-sayur-sop-ayam",name:"Sayur Sop Ayam",desc:"Sayur sop rumahan dengan ayam, wortel, kol, dan tomat. Berat bahan mengacu pada bahan mentah sebelum dimasak.",cost:8000,
+   items:[{foodId:"ayam-dada",grams:60},{foodId:"wortel",grams:40},{foodId:"kol",grams:40},{foodId:"tomat",grams:20},{foodId:"minyak-sawit",grams:2}],
+   steps:"Rebus ayam hingga matang. Masukkan wortel dan kol, lalu tomat. Bumbui secukupnya. Minyak dicatat sebagai perkiraan yang terserap; air dan bumbu yang belum ada di database belum dihitung."}
+];
+// Angka Kecukupan Gizi 2019 (Permenkes RI No. 28 Tahun 2019), per orang per hari.
+const AKG_2019 = [
+  {sex:"L",min:10,max:12,bb:36,tb:145,kcal:2000,protein:50,fat:65,carb:300,fiber:28},
+  {sex:"L",min:13,max:15,bb:50,tb:163,kcal:2400,protein:70,fat:80,carb:350,fiber:34},
+  {sex:"L",min:16,max:18,bb:60,tb:168,kcal:2650,protein:75,fat:85,carb:400,fiber:37},
+  {sex:"L",min:19,max:29,bb:60,tb:168,kcal:2650,protein:65,fat:75,carb:430,fiber:37},
+  {sex:"L",min:30,max:49,bb:60,tb:166,kcal:2550,protein:65,fat:70,carb:415,fiber:36},
+  {sex:"P",min:10,max:12,bb:38,tb:147,kcal:1900,protein:55,fat:65,carb:280,fiber:27},
+  {sex:"P",min:13,max:15,bb:48,tb:156,kcal:2050,protein:65,fat:70,carb:300,fiber:29},
+  {sex:"P",min:16,max:18,bb:52,tb:159,kcal:2100,protein:65,fat:70,carb:300,fiber:29},
+  {sex:"P",min:19,max:29,bb:55,tb:159,kcal:2250,protein:60,fat:65,carb:360,fiber:32},
+  {sex:"P",min:30,max:49,bb:56,tb:158,kcal:2150,protein:60,fat:60,carb:340,fiber:30}
+];
+const BREAKFAST_SHARE = {min:0.15,max:0.30}; // Pedoman Gizi Seimbang 2014: sarapan 15–30% kebutuhan gizi harian
+const SESSIONS = [{id:"sarapan",label:"Sarapan"},{id:"siang",label:"Makan siang"},{id:"malam",label:"Makan malam"},{id:"selingan",label:"Selingan"}];
+const CATS = {pokok:"Makanan pokok",lauk:"Lauk",sayur:"Sayur",buah:"Buah",kacang:"Kacang-kacangan",lemak:"Minyak/lemak",minum:"Minuman"};
+const NUTR = [
+  {k:"kcal",label:"Energi",unit:"kkal",color:"var(--forest)"},
+  {k:"protein",label:"Protein",unit:"g",color:"var(--leaf)"},
+  {k:"carb",label:"Karbohidrat",unit:"g",color:"var(--sun)"},
+  {k:"fat",label:"Lemak",unit:"g",color:"var(--c-lauk)"},
+  {k:"fiber",label:"Serat",unit:"g",color:"var(--c-sayur)"}
+];
+const NKEYS = NUTR.map(n=>n.k);
+
+/* ---------- 2. PENYIMPANAN LOKAL ---------- */
+const KEY = "sarapanpintar:v1:";
+const Store = {
+  ok:true, mem:{},
+  init(){ try{const k=KEY+"__test";localStorage.setItem(k,"1");localStorage.removeItem(k);this.ok=true;}catch(e){this.ok=false;} },
+  get(k){ if(!this.ok) return this.mem[k]??null; try{return localStorage.getItem(k);}catch(e){return this.mem[k]??null;} },
+  set(k,v){ this.mem[k]=v; if(!this.ok) return false; try{localStorage.setItem(k,v);return true;}catch(e){this.ok=false;notices.storage=true;renderBanners();return false;} },
+  del(k){ delete this.mem[k]; try{localStorage.removeItem(k);}catch(e){} }
+};
+const notices = {storage:false, corrupt:false};
+let mode = "demo";          // "demo" | "user" — dua ruang data terpisah
+let state = null;
+
+const clone = o => JSON.parse(JSON.stringify(o));
+const uid = () => Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+function freshState(kind){
+  return {schemaVersion:SCHEMA_VERSION,kind,profile:null,settings:{useAkg:true,qrBase:""},foods:clone(DEFAULT_FOODS),menus:clone(DEFAULT_MENUS),logs:[]};
+}
+function validState(s){
+  return s && typeof s==="object" && s.schemaVersion===SCHEMA_VERSION && Array.isArray(s.logs) && Array.isArray(s.foods) && Array.isArray(s.menus) && s.settings && typeof s.settings==="object";
+}
+function loadState(){
+  const storedMode = Store.get(KEY+"mode");
+  mode = storedMode==="user" ? "user" : "demo";
+  const raw = Store.get(KEY+mode);
+  if(!raw){ state = mode==="demo" ? buildDemo() : freshState("user"); saveState(); return; }
+  try{
+    const s = JSON.parse(raw);
+    if(!validState(s)) throw new Error("struktur tidak dikenal");
+    s.logs = s.logs.filter(l=>l && /^\d{4}-\d{2}-\d{2}$/.test(l.date) && Array.isArray(l.items));
+    state = s;
+  }catch(e){
+    Store.set(KEY+mode+":rusak-"+Date.now(), raw); // simpan cadangan, jangan dibuang diam-diam
+    notices.corrupt = true;
+    state = mode==="demo" ? buildDemo() : freshState("user");
+    saveState();
+  }
+}
+function saveState(){ Store.set(KEY+mode, JSON.stringify(state)); }
+function setMode(m){
+  mode = m; Store.set(KEY+"mode", m);
+  const raw = Store.get(KEY+m);
+  let s=null; try{ s = raw?JSON.parse(raw):null; }catch(e){ s=null; }
+  state = validState(s) ? s : (m==="demo" ? buildDemo() : freshState("user"));
+  saveState();
+}
+
+/* ---------- 3. MESIN PERHITUNGAN GIZI ---------- */
+function toNum(v){ if(v===null||v===undefined||v==="") return null; const n=Number(v); return Number.isFinite(n)?n:null; }
+// Nutrisi satu bahan = berat (g) / 100 × nilai per 100 g. Nilai tidak tersedia → null (bukan NaN).
+function nutrientsOfItem(per100, grams){
+  const g = toNum(grams); const out = {};
+  NKEYS.forEach(k=>{ const v = per100 ? toNum(per100[k]) : null; out[k] = (g===null||g<=0||v===null) ? null : v*g/100; });
+  return out;
+}
+// Jumlahkan beberapa hasil; catat nutrien yang datanya tidak lengkap.
+function sumNutrients(list){
+  const t = {missing:{}}; NKEYS.forEach(k=>t[k]=0);
+  list.forEach(n=>NKEYS.forEach(k=>{ if(n[k]===null||n[k]===undefined) t.missing[k]=true; else t[k]+=n[k]; }));
+  return t;
+}
+function per100Of(item){
+  if(item.per100) return item.per100;
+  const f = foodById(item.foodId); return f ? f : null;
+}
+function recipeTotals(items){ return sumNutrients((items||[]).map(i=>nutrientsOfItem(per100Of(i), i.grams))); }
+// Persentase hanya bila target valid.
+function pctOf(value, target){ const v=toNum(value), t=toNum(target); if(v===null||t===null||t<=0) return null; return v/t*100; }
+function foodById(id){ return state.foods.find(f=>f.id===id) || null; }
+function menuById(id){ return state.menus.find(m=>m.id===id) || null; }
+function snapshotItem(foodId, grams){
+  const f = foodById(foodId); if(!f) return null;
+  const per100={}; NKEYS.forEach(k=>per100[k]=toNum(f[k]));
+  return {foodId:f.id,name:f.name,state:f.state,status:f.status,local:!!f.local,cat:f.cat,grams:toNum(grams),per100};
+}
+
+/* ---------- 4. TARGET HARIAN ---------- */
+function getTargets(){
+  const p = state.profile;
+  if(!state.settings.useAkg) return {ok:false,reason:"Target AKG dimatikan di Pengaturan. Dashboard hanya menampilkan asupan tercatat."};
+  if(!p) return {ok:false,reason:"Profil belum diisi, jadi target personal belum ditetapkan."};
+  if(p.sex!=="L" && p.sex!=="P") return {ok:false,reason:"Tabel AKG 2019 dibedakan menurut jenis kelamin. Pilih jenis kelamin di Profil agar target bisa ditentukan."};
+  const row = AKG_2019.find(r=>r.sex===p.sex && p.age>=r.min && p.age<=r.max);
+  if(!row) return {ok:false,reason:`Aplikasi ini baru memuat tabel AKG untuk usia 10–49 tahun. Untuk usia ${p.age} tahun target belum dikonfigurasi.`};
+  return {ok:true,row,values:{kcal:row.kcal,protein:row.protein,carb:row.carb,fat:row.fat,fiber:row.fiber},
+    group:`${p.sex==="L"?"Laki-laki":"Perempuan"} ${row.min}–${row.max} tahun`};
+}
+
+/* ---------- 5. UTILITAS ---------- */
+const fmt0 = new Intl.NumberFormat("id-ID",{maximumFractionDigits:0});
+const fmt1 = new Intl.NumberFormat("id-ID",{maximumFractionDigits:1});
+const fmtRp = v => toNum(v)===null ? "–" : "Rp"+fmt0.format(toNum(v));
+function fmtN(v,k){ if(v===null||v===undefined||!Number.isFinite(v)) return "–"; return k==="kcal"?fmt0.format(v):fmt1.format(v); }
+function esc(s){ return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function dkey(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function todayKey(){ return dkey(new Date()); }
+function nowTime(){ const d=new Date(); return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"); }
+function addDays(key,n){ const [y,m,d]=key.split("-").map(Number); const dt=new Date(y,m-1,d); dt.setDate(dt.getDate()+n); return dkey(dt); }
+function dateLabel(key,opts){ const [y,m,d]=key.split("-").map(Number); return new Date(y,m-1,d).toLocaleDateString("id-ID",opts||{weekday:"long",day:"numeric",month:"long",year:"numeric"}); }
+function sessionLabel(id){ return (SESSIONS.find(s=>s.id===id)||{label:id}).label; }
+function defaultSession(){ const h=new Date().getHours(); return h<11?"sarapan":h<15?"siang":h<18?"selingan":"malam"; }
+function logsOn(key){ return state.logs.filter(l=>l.date===key).sort((a,b)=>(a.time||"").localeCompare(b.time||"")); }
+function isDuplicate(menuId,date,session,exceptId){ return state.logs.some(l=>l.source==="menu"&&l.menuId===menuId&&l.date===date&&l.session===session&&l.id!==exceptId); }
+function hasSim(items){ return (items||[]).some(i=>{ const s=i.status || (foodById(i.foodId)||{}).status; return s==="simulasi"; }); }
+
+const ICON = {
+  dashboard:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg>',
+  catat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>',
+  katalog:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h16a8 8 0 0 1-16 0z"/><path d="M12 3v4M8 5v2M16 5v2"/></svg>',
+  riwayat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/></svg>',
+  profil:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>',
+  x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  trash:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>',
+  qr:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM18 18h3v3h-3zM14 20h2M20 14v2"/></svg>'
+};
+const NAV = [["dashboard","Dashboard"],["catat","Catat Sarapan"],["katalog","Katalog Menu"],["riwayat","Riwayat"],["profil","Profil"]];
+
+// Ilustrasi piring lokal (SVG): irisan sebanding berat bahan, warna per kategori.
+function plateSVG(items, size){
+  const parts = (items||[]).map(i=>{ const f=foodById(i.foodId); const cat=i.cat||(f&&f.cat)||"pokok"; return {cat,g:Math.max(0,toNum(i.grams)||0)}; }).filter(p=>p.cat!=="lemak"&&p.g>0);
+  const total = parts.reduce((a,p)=>a+p.g,0);
+  let a0=-Math.PI/2, paths="";
+  const r=34, cx=50, cy=50;
+  if(total>0) parts.forEach(p=>{ const a1=a0+p.g/total*Math.PI*2; const large=(a1-a0)>Math.PI?1:0;
+    if(parts.length===1){ paths+=`<circle style="fill:var(--c-${p.cat})" cx="50" cy="50" r="${r}"/>`; }
+    else paths+=`<path style="fill:var(--c-${p.cat});stroke:var(--surface)" d="M${cx},${cy} L${(cx+r*Math.cos(a0)).toFixed(2)},${(cy+r*Math.sin(a0)).toFixed(2)} A${r},${r} 0 ${large} 1 ${(cx+r*Math.cos(a1)).toFixed(2)},${(cy+r*Math.sin(a1)).toFixed(2)} Z" stroke-width="1.5"/>`;
+    a0=a1; });
+  return `<svg viewBox="0 0 100 100" width="${size||100}" height="${size||100}" aria-hidden="true"><circle style="fill:var(--surface);stroke:var(--line)" cx="50" cy="50" r="47" stroke-width="2"/><circle style="stroke:var(--line)" cx="50" cy="50" r="40" fill="none" stroke-width="1"/>${paths}</svg>`;
+}
+
+/* ---------- 6. NAVIGASI & RENDER ---------- */
+let view = "dashboard";
+let katalogTab = "menu";
+let lastToday = todayKey();
+const VIEWS = ["dashboard","catat","katalog","riwayat","profil","tentang"];
+
+function renderNav(){
+  const html = NAV.map(([id,label])=>`<button data-action="go" data-view="${id}" ${view===id?'aria-current="page"':""}>${ICON[id]}<span>${label}</span></button>`).join("");
+  document.getElementById("sidenav").innerHTML = html;
+  document.getElementById("bottomnav").innerHTML = NAV.map(([id,label])=>`<button data-action="go" data-view="${id}" ${view===id?'aria-current="page"':""}>${ICON[id]}<span>${label.replace(" Sarapan","").replace(" Menu","")}</span></button>`).join("");
+}
+function renderBanners(){
+  const b=[];
+  if(!Store.ok) b.push(`<div class="banner err" role="alert"><span><b>Penyimpanan lokal tidak tersedia.</b> Browser ini memblokir localStorage (mis. mode privat). Aplikasi tetap berjalan, tetapi data hilang saat halaman ditutup.</span></div>`);
+  if(notices.corrupt) b.push(`<div class="banner err" role="alert"><span>Data tersimpan tidak bisa dibaca, jadi aplikasi memulai data baru. Salinan data lama disimpan sebagai cadangan di browser.</span><button class="btn sm" data-action="dismiss-corrupt">Tutup</button></div>`);
+  if(mode==="demo") b.push(`<div class="banner demo"><span><b>Mode Demo · SIMULASI.</b> Profil dan riwayat di sini adalah contoh dan terpisah dari data pribadimu.</span><span class="row"><button class="btn sm" data-action="reset-demo">Reset Demo</button><button class="btn sm primary" data-action="switch-mode" data-mode="user">Pakai Data Saya</button></span></div>`);
+  document.getElementById("banners").innerHTML = b.join("");
+}
+function go(v, opts){
+  if(!VIEWS.includes(v)) v="dashboard";
+  view=v; render();
+  try{ if(!(opts&&opts.noHash)) history.replaceState(null,"","#"+v); }catch(e){}
+  if(!(opts&&opts.keepScroll)) window.scrollTo(0,0);
+}
+function render(){
+  renderNav(); renderBanners();
+  const el = document.getElementById("view");
+  try{
+    el.innerHTML = ({dashboard:vDashboard,catat:vCatat,katalog:vKatalog,riwayat:vRiwayat,profil:vProfil,tentang:vTentang})[view]();
+    if(view==="catat") afterCatat();
+    if(view==="profil") bindProfile();
+  }catch(err){
+    console.error(err);
+    el.innerHTML = `<div class="banner err" role="alert">Terjadi kesalahan saat menampilkan halaman: ${esc(err.message)}. Data tidak terhapus. Coba buka halaman lain atau muat ulang.</div>`;
+  }
+}
+
+/* ---------- 7. DASHBOARD ---------- */
+function totalsForLogs(logs){
+  const t = sumNutrients(logs.map(l=>{ const r=recipeTotals(l.items); const o={}; NKEYS.forEach(k=>o[k]=r[k]); o._m=r.missing; return o; }));
+  logs.forEach(l=>{ const r=recipeTotals(l.items); NKEYS.forEach(k=>{ if(r.missing[k]) t.missing[k]=true; }); });
+  return t;
+}
+function vDashboard(){
+  const today = todayKey();
+  const tg = getTargets();
+  const all = logsOn(today);
+  const bf = all.filter(l=>l.session==="sarapan");
+  const tAll = totalsForLogs(all), tBf = totalsForLogs(bf);
+  const name = state.profile && state.profile.nick ? state.profile.nick : (state.profile? "" : "");
+  const hour = new Date().getHours();
+  const greet = hour<11?"Selamat pagi":hour<15?"Selamat siang":hour<18?"Selamat sore":"Selamat malam";
+  const costBf = bf.reduce((a,l)=>a+(toNum(l.cost)||0),0);
+  const localKcal = bf.reduce((a,l)=>a+(l.items||[]).reduce((b,i)=>{ const loc = i.local!==undefined?i.local:!!(foodById(i.foodId)||{}).local; const n=nutrientsOfItem(per100Of(i),i.grams).kcal; return b+(loc&&n?n:0); },0),0);
+  const bfShareOfDay = tAll.kcal>0 ? tBf.kcal/tAll.kcal*100 : null;
+
+  // Kartu utama sarapan
+  let gauge = "";
+  if(tg.ok){
+    const tk = tg.values.kcal, lo=tk*BREAKFAST_SHARE.min, hi=tk*BREAKFAST_SHARE.max, scaleMax=tk*0.4;
+    const pos = v=>Math.min(100,v/scaleMax*100);
+    gauge = `<div class="gauge" role="img" aria-label="Energi sarapan ${fmt0.format(tBf.kcal)} kkal; rentang anjuran ${fmt0.format(lo)} sampai ${fmt0.format(hi)} kkal">
+      <div class="fill" style="width:${pos(tBf.kcal)}%"></div><div class="band" style="left:${pos(lo)}%;width:${pos(hi)-pos(lo)}%"></div></div>
+      <div class="gauge-scale num"><span>0</span><span>Rentang sarapan 15–30%: ${fmt0.format(lo)}–${fmt0.format(hi)} kkal</span><span>${fmt0.format(scaleMax)}</span></div>`;
+  } else {
+    gauge = `<p class="small" style="margin-top:14px;opacity:.85">Rentang sarapan belum bisa ditampilkan: ${esc(tg.reason)}</p>`;
+  }
+  const hero = `<section class="hero">
+    <div class="card hero-main">
+      <div class="row" style="justify-content:space-between"><span class="eyebrow">Sarapan hari ini · estimasi</span>${hasSim(bf.flatMap(l=>l.items))?'<span class="chip sim">ada data SIMULASI</span>':""}</div>
+      <div class="big num" style="margin-top:10px">${fmt0.format(tBf.kcal)}<small>kkal</small></div>
+      ${gauge}
+      <div class="hero-stats">
+        <div><b>${fmt1.format(tBf.protein)} g</b><span>Protein</span></div>
+        <div><b>${fmt1.format(tBf.carb)} g</b><span>Karbohidrat</span></div>
+        <div><b>${fmt1.format(tBf.fat)} g</b><span>Lemak</span></div>
+        <div><b>${tBf.missing.fiber?"≥ ":""}${fmt1.format(tBf.fiber)} g</b><span>Serat</span></div>
+        <div><b>${fmtRp(costBf)}</b><span>Biaya sarapan</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-h"><h2>Kontribusi sarapan</h2></div>
+      <div class="grid" style="gap:16px">
+        <div>
+          <div class="row" style="justify-content:space-between"><span class="small muted">Porsi energi harian dari sarapan</span><b class="num">${bfShareOfDay===null?"–":fmt0.format(bfShareOfDay)+"%"}</b></div>
+          <div class="split" style="margin-top:6px">${bfShareOfDay===null?"":`<i style="width:${bfShareOfDay}%;background:var(--sun)"></i><i style="width:${100-bfShareOfDay}%;background:var(--leaf)"></i>`}</div>
+          <div class="legend" style="margin-top:6px"><span><i class="dot" style="background:var(--sun)"></i>Sarapan</span><span><i class="dot" style="background:var(--leaf)"></i>Waktu makan lain</span></div>
+        </div>
+        <div>
+          <div class="row" style="justify-content:space-between"><span class="small muted">Energi sarapan dari pangan lokal</span><b class="num">${tBf.kcal>0?fmt0.format(localKcal/tBf.kcal*100)+"%":"–"}</b></div>
+          <div class="bar" style="margin-top:6px"><i style="width:${tBf.kcal>0?Math.min(100,localKcal/tBf.kcal*100):0}%;background:var(--c-sayur)"></i></div>
+        </div>
+        <div>
+          <div class="row" style="justify-content:space-between"><span class="small muted">Sarapan terhadap target energi harian</span><b class="num">${tg.ok?fmt0.format(pctOf(tBf.kcal,tg.values.kcal))+"%":"target belum ada"}</b></div>
+          <p class="small muted" style="margin-top:4px">${tg.ok?`Acuan: AKG 2019, ${esc(tg.group)} (${fmt0.format(tg.values.kcal)} kkal/hari).`:"Tanpa target, hanya asupan tercatat yang ditampilkan."}</p>
+        </div>
+      </div>
+    </div>
+  </section>`;
+
+  // Kartu makro harian
+  const macros = NUTR.map(n=>{
+    const v=tAll[n.k], t=tg.ok?tg.values[n.k]:null, p=pctOf(v,t);
+    const bar = p===null ? `<div class="bar" aria-hidden="true"><i style="width:0"></i></div><span class="t">Target belum dikonfigurasi</span>`
+      : `<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(Math.min(p,100))}" aria-label="${n.label} ${fmt0.format(p)} persen dari target"><i class="${p>100?"over":""}" style="width:${Math.min(100,p)}%;${p<=100?`background:${n.color}`:""}"></i></div>
+         <span class="t num">${fmt0.format(p)}% dari ${fmtN(t,n.k)} ${n.unit}${p>100?" · melewati target":""}</span>`;
+    return `<div class="card macro"><span class="eyebrow">${n.label}</span><div class="v">${tAll.missing[n.k]&&v>0?"≥":""}${fmtN(v,n.k)} <small>${n.unit}</small></div>${bar}</div>`;
+  }).join("");
+
+  // Grafik 7 hari
+  const days=[]; for(let i=6;i>=0;i--) days.push(addDays(today,-i));
+  const series = days.map(d=>{ const ls=logsOn(d); const b=totalsForLogs(ls.filter(l=>l.session==="sarapan")).kcal; const a=totalsForLogs(ls).kcal; return {d,b,o:Math.max(0,a-b)}; });
+  const chart = weekChart(series, tg.ok?tg.values.kcal:null);
+
+  const list = all.length ? all.map(logRow).join("") : `<div class="empty"><b>Belum ada catatan hari ini.</b><span>Pindai QR menu, pilih dari katalog, atau catat bahan secara manual.</span><div class="row" style="justify-content:center"><button class="btn primary" data-action="go" data-view="catat">Catat sarapan</button><button class="btn" data-action="go" data-view="katalog">Buka katalog</button></div></div>`;
+
+  return `<div class="grid" style="gap:18px">
+    <div class="hello"><div><p class="date">${esc(dateLabel(today))}</p><h1>${greet}${name?", "+esc(name):""}!</h1></div>
+      <div class="row"><button class="btn primary" data-action="go" data-view="catat">${ICON.catat} Catat sarapan</button><button class="btn" data-action="go" data-view="katalog">${ICON.katalog} Pilih menu</button></div></div>
+    ${hero}
+    <section><div class="card-h"><h2>Asupan harian tercatat</h2><span class="small muted">${tg.ok?"Dibandingkan dengan target estimasi AKG 2019":"Target personal belum ditetapkan, jadi persentase tidak ditampilkan"}</span></div>
+      <div class="grid g5">${macros}</div>
+      ${tg.ok?"":`<p class="small muted" style="margin-top:10px">${esc(tg.reason)} <button class="btn sm" data-action="go" data-view="profil">Buka Profil</button></p>`}
+    </section>
+    <section class="grid g2">
+      <div class="card chart"><div class="card-h"><h2>Energi 7 hari terakhir</h2><div class="legend"><span><i class="dot" style="background:var(--sun)"></i>Sarapan</span><span><i class="dot" style="background:var(--leaf)"></i>Lainnya</span>${tg.ok?'<span><i class="dot" style="background:var(--muted);height:2px"></i>Target harian</span>':""}</div></div>${chart}</div>
+      <div class="card"><div class="card-h"><h2>Catatan hari ini</h2><button class="btn sm ghost" data-action="go" data-view="riwayat">Lihat riwayat</button></div><div class="loglist">${list}</div></div>
+    </section>
+    <p class="small muted">Semua angka adalah <b>estimasi</b> dari data komposisi pangan dan berat yang dicatat. Ini alat edukasi, bukan diagnosis atau rekomendasi medis. <button class="btn sm ghost" data-action="go" data-view="tentang">Baca metodologi</button></p>
+  </div>`;
+}
+function weekChart(series, target){
+  const narrow=window.innerWidth<600; const W=narrow?360:640,H=narrow?240:230,pl=40,pr=8,pt=14,pb=34; const iw=W-pl-pr, ih=H-pt-pb;
+  const maxV = Math.max(target||0, ...series.map(s=>s.b+s.o), 500);
+  const step = maxV>3000?1000:500; const top = Math.ceil(maxV*1.08/step)*step;
+  const y = v => pt+ih-(v/top)*ih;
+  let g=""; for(let v=0; v<=top; v+=step){ g+=`<line style="stroke:var(--line)" x1="${pl}" x2="${W-pr}" y1="${y(v)}" y2="${y(v)}" stroke-width="1"/><text style="fill:var(--muted)" x="${pl-8}" y="${y(v)+4}" text-anchor="end" font-size="11">${fmt0.format(v)}</text>`; }
+  const bw = iw/series.length*0.56;
+  const bars = series.map((s,i)=>{ const cx=pl+iw/series.length*(i+.5); const x=cx-bw/2;
+    const hb=(s.b/top)*ih, ho=(s.o/top)*ih; const isToday=i===series.length-1;
+    const lbl = dateLabel(s.d,{weekday:"short"});
+    return `<g><title>${dateLabel(s.d,{weekday:"long",day:"numeric",month:"short"})}: sarapan ${fmt0.format(s.b)} kkal, lainnya ${fmt0.format(s.o)} kkal</title>
+      ${ho>0?`<rect style="fill:var(--leaf)" x="${x}" y="${y(s.b+s.o)}" width="${bw}" height="${ho}" rx="3" opacity="${isToday?1:.75}"/>`:""}
+      ${hb>0?`<rect style="fill:var(--sun)" x="${x}" y="${y(s.b)}" width="${bw}" height="${hb}" rx="3"/>`:""}
+      ${s.b+s.o>0?`<text style="fill:var(--ink)" x="${cx}" y="${y(s.b+s.o)-5}" text-anchor="middle" font-size="10.5" font-weight="700">${fmt0.format(s.b+s.o)}</text>`:""}
+      <text x="${cx}" y="${H-12}" text-anchor="middle" font-size="11.5" font-weight="${isToday?700:500}" style="fill:${isToday?"var(--ink)":"var(--muted)"}">${isToday?"Hari ini":esc(lbl)}</text></g>`; }).join("");
+  const tl = target?`<line style="stroke:var(--muted)" x1="${pl}" x2="${W-pr}" y1="${y(target)}" y2="${y(target)}" stroke-width="1.5" stroke-dasharray="5 4"/>`:"";
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Grafik batang energi tercatat tujuh hari terakhir">${g}${bars}${tl}</svg>`;
+}
+function logRow(l){
+  const t=recipeTotals(l.items);
+  return `<div class="logitem"><div class="ic">${plateSVG(l.items,44)}</div>
+    <div style="min-width:0"><div class="nm">${esc(l.name)}</div><div class="meta">${esc(sessionLabel(l.session))} · ${esc(l.time||"")} · ${l.source==="menu"?"dari menu":"manual"}${hasSim(l.items)?' · <span class="chip sim">SIMULASI</span>':""}</div></div>
+    <div class="kc">${fmt0.format(t.kcal)} kkal<div class="meta">P ${fmt1.format(t.protein)} g</div></div>
+    <div class="acts"><button class="btn sm" data-action="edit-log" data-id="${l.id}">Edit</button><button class="btn sm danger" data-action="delete-log" data-id="${l.id}">Batalkan</button></div></div>`;
+}
+
+/* ---------- 8. CATAT (MANUAL) ---------- */
+let draft = null;
+function newDraft(){ return {editingId:null,name:"",date:todayKey(),time:nowTime(),session:defaultSession(),cost:"",note:"",items:[],menuId:null,source:"manual"}; }
+let searchQ = "";
+function vCatat(){
+  if(!draft) draft=newDraft();
+  const editing = !!draft.editingId;
+  return `<div class="grid" style="gap:18px">
+    <div class="hello"><div><p class="date">${editing?"Mengedit catatan":"Pencatatan manual"}</p><h1>${editing?"Edit catatan makan":"Catat sarapan"}</h1></div>
+      <div class="row"><button class="btn" data-action="go" data-view="katalog">Pilih dari katalog menu</button></div></div>
+    <div class="catat">
+      <div class="card">
+        <div class="field"><label for="food-search">1. Cari bahan makanan</label>
+          <input type="search" id="food-search" placeholder="Ketik: nasi, telur, tempe…" value="${esc(searchQ)}" autocomplete="off"></div>
+        <div class="results" id="results"></div>
+        <p class="small muted" style="margin-top:10px">Bahan tidak ada? Tambahkan di <button class="btn sm ghost" data-action="open-katalog-bahan">Katalog → Bahan</button></p>
+      </div>
+      <div class="card grid" style="gap:14px">
+        <div class="card-h" style="margin:0"><h2>2. Bahan &amp; berat</h2><span class="small muted">Berat bagian yang dimakan, dalam gram</span></div>
+        <div class="items" id="items"></div>
+        <div id="totals"></div>
+        <div class="form-grid">
+          <div class="field span2"><label for="d-name">Nama catatan</label><input type="text" id="d-name" maxlength="60" placeholder="mis. Sarapan nasi tempe" value="${esc(draft.name)}"></div>
+          <div class="field"><label for="d-date">Tanggal</label><input type="date" id="d-date" value="${esc(draft.date)}" max="${addDays(todayKey(),1)}"></div>
+          <div class="field"><label for="d-time">Jam makan</label><input type="time" id="d-time" value="${esc(draft.time)}"></div>
+          <div class="field"><label for="d-session">Waktu makan</label><select id="d-session">${SESSIONS.map(s=>`<option value="${s.id}" ${draft.session===s.id?"selected":""}>${s.label}</option>`).join("")}</select></div>
+          <div class="field"><label for="d-cost">Biaya (opsional)</label><input type="number" id="d-cost" min="0" step="500" inputmode="numeric" placeholder="Rp" value="${esc(draft.cost)}"></div>
+        </div>
+        <div id="d-errors" role="alert"></div>
+        <div class="row" style="justify-content:flex-end">
+          ${editing?`<button class="btn" data-action="cancel-edit">Batal edit</button>`:`<button class="btn" data-action="clear-draft">Kosongkan</button>`}
+          <button class="btn primary" data-action="save-draft">${editing?"Simpan perubahan":"Simpan catatan"}</button>
+        </div>
+      </div>
+    </div></div>`;
+}
+function afterCatat(){
+  renderResults(); renderDraftItems(); renderTotals();
+  const s=document.getElementById("food-search");
+  s.addEventListener("input",()=>{ searchQ=s.value; renderResults(); });
+  ["d-name","d-date","d-time","d-session","d-cost"].forEach(id=>{ const el=document.getElementById(id); el.addEventListener("input",()=>{ const k={"d-name":"name","d-date":"date","d-time":"time","d-session":"session","d-cost":"cost"}[id]; draft[k]=el.value; }); el.addEventListener("change",()=>{ const k={"d-name":"name","d-date":"date","d-time":"time","d-session":"session","d-cost":"cost"}[id]; draft[k]=el.value; }); });
+}
+function renderResults(){
+  const q=searchQ.trim().toLowerCase();
+  const list = state.foods.filter(f=>!q || f.name.toLowerCase().includes(q) || (CATS[f.cat]||"").toLowerCase().includes(q));
+  const el=document.getElementById("results"); if(!el) return;
+  el.innerHTML = list.length ? list.map(f=>`<button class="res" data-action="add-item" data-id="${esc(f.id)}"><span><b>${esc(f.name)}</b><small>${esc(CATS[f.cat]||f.cat)} · ${f.state} · ${fmt0.format(f.kcal)} kkal/100 g ${f.status==="simulasi"?"· SIMULASI":""}</small></span><span class="plus" aria-hidden="true">+</span></button>`).join("")
+    : `<div class="empty small">Tidak ada bahan "${esc(searchQ)}". Coba kata lain atau tambahkan bahan baru di Katalog.</div>`;
+}
+function itemCalcText(it){
+  const f=foodById(it.foodId); const n=nutrientsOfItem(per100Of(it),it.grams);
+  if(toNum(it.grams)===null||toNum(it.grams)<=0) return `<span style="color:var(--danger)">Isi berat lebih dari 0 g</span>`;
+  return `${fmt0.format(n.kcal)} kkal · P ${fmt1.format(n.protein)} · KH ${fmt1.format(n.carb)} · L ${fmt1.format(n.fat)} · S ${n.fiber===null?"n/a":fmt1.format(n.fiber)} g`;
+}
+function renderDraftItems(){
+  const el=document.getElementById("items"); if(!el) return;
+  if(!draft.items.length){ el.innerHTML=`<div class="empty small">Belum ada bahan. Pilih bahan dari daftar di kiri.</div>`; return; }
+  el.innerHTML = draft.items.map((it,idx)=>{ const f=foodById(it.foodId)||{name:it.name||it.foodId,state:it.state,status:it.status};
+    return `<div class="item"><div style="min-width:0"><div class="nm">${esc(f.name)} <span class="chip raw">${esc(f.state||"")}</span>${f.status==="simulasi"?' <span class="chip sim">SIMULASI</span>':""}</div><div class="calc" id="calc-${idx}">${itemCalcText(it)}</div></div>
+      <div class="gram"><label class="sr" for="g-${idx}" style="position:absolute;left:-9999px">Berat ${esc(f.name)} (gram)</label><input type="number" id="g-${idx}" data-idx="${idx}" class="gram-in" min="1" max="2000" step="1" inputmode="decimal" value="${esc(it.grams??"")}" aria-invalid="${!(toNum(it.grams)>0)}"><span>g</span></div>
+      <button class="iconbtn" data-action="remove-item" data-idx="${idx}" aria-label="Hapus ${esc(f.name)}">${ICON.trash}</button></div>`; }).join("");
+  el.querySelectorAll(".gram-in").forEach(inp=>inp.addEventListener("input",()=>{ const i=+inp.dataset.idx; const v=inp.value; draft.items[i].grams = v===""?null:toNum(v); inp.setAttribute("aria-invalid", String(!(toNum(v)>0 && toNum(v)<=2000))); document.getElementById("calc-"+i).innerHTML=itemCalcText(draft.items[i]); renderTotals(); }));
+}
+function renderTotals(){
+  const el=document.getElementById("totals"); if(!el) return;
+  const valid = draft.items.filter(i=>toNum(i.grams)>0);
+  const t=recipeTotals(valid);
+  el.innerHTML = `<div class="totals" aria-live="polite">${NUTR.map(n=>`<div><span>${n.label}</span><b>${t.missing[n.k]&&t[n.k]>0?"≥":""}${fmtN(t[n.k],n.k)} ${n.unit}</b></div>`).join("")}</div>
+   <p class="small muted" style="margin-top:6px">Total estimasi ${valid.length} bahan.${t.missing.fiber?" Serat sebagian bahan belum tersedia, jadi nilai serat minimal.":""}${hasSim(valid)?" Mengandung data SIMULASI.":""}</p>`;
+}
+function validateDraft(){
+  const errs=[];
+  if(!draft.items.length) errs.push("Tambahkan minimal satu bahan.");
+  draft.items.forEach(it=>{ const g=toNum(it.grams); const f=foodById(it.foodId); if(g===null||g<=0) errs.push(`Berat ${f?f.name:"bahan"} harus lebih dari 0 g.`); else if(g>2000) errs.push(`Berat ${f?f.name:"bahan"} terlalu besar (maks. 2.000 g per bahan).`); });
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(draft.date||"")) errs.push("Pilih tanggal yang valid.");
+  else if(draft.date>addDays(todayKey(),1)) errs.push("Tanggal tidak boleh lebih dari besok.");
+  if(!/^\d{2}:\d{2}$/.test(draft.time||"")) errs.push("Isi jam makan.");
+  if(draft.cost!==""&&draft.cost!==null&&(toNum(draft.cost)===null||toNum(draft.cost)<0||toNum(draft.cost)>1000000)) errs.push("Biaya harus angka 0–1.000.000.");
+  if(draft.source==="menu" && draft.menuId && isDuplicate(draft.menuId,draft.date,draft.session,draft.editingId)) errs.push(`Menu ini sudah tercatat pada ${sessionLabel(draft.session)} ${dateLabel(draft.date,{day:"numeric",month:"short"})}. Pencatatan ganda dicegah.`);
+  return errs;
+}
+function saveDraft(){
+  const errs=validateDraft();
+  const box=document.getElementById("d-errors");
+  if(errs.length){ box.innerHTML=`<div class="banner err">${errs.map(esc).join("<br>")}</div>`; return; }
+  const items = draft.items.map(it=> it.per100 ? {...it,grams:toNum(it.grams)} : (snapshotItem(it.foodId,it.grams) || {...it,grams:toNum(it.grams)}));
+  const name = draft.name.trim() || (draft.items.length===1 ? (items[0].name||"Catatan") : sessionLabel(draft.session)+" manual");
+  const rec = {id:draft.editingId||uid(),date:draft.date,time:draft.time,session:draft.session,name,source:draft.source||"manual",menuId:draft.menuId||null,
+    cost:draft.cost===""||draft.cost===null?null:toNum(draft.cost),items,updatedAt:new Date().toISOString()};
+  if(draft.editingId){ const i=state.logs.findIndex(l=>l.id===draft.editingId); if(i>=0){ rec.createdAt=state.logs[i].createdAt; state.logs[i]=rec; } }
+  else { rec.createdAt=rec.updatedAt; state.logs.push(rec); }
+  saveState(); const wasEdit=!!draft.editingId; draft=newDraft(); searchQ="";
+  toast(wasEdit?"Perubahan disimpan":"Catatan disimpan"); go("dashboard");
+}
+function editLog(id){
+  const l=state.logs.find(x=>x.id===id); if(!l) return;
+  draft={editingId:l.id,name:l.name,date:l.date,time:l.time||"07:00",session:l.session,cost:l.cost??"",items:clone(l.items),menuId:l.menuId,source:l.source};
+  closeModal(); go("catat");
+}
+
+/* ---------- 9. KATALOG ---------- */
+function vKatalog(){
+  const tabs = `<div class="tabs" role="tablist"><button role="tab" aria-selected="${katalogTab==="menu"}" data-action="ktab" data-tab="menu">Menu sarapan</button><button role="tab" aria-selected="${katalogTab==="bahan"}" data-action="ktab" data-tab="bahan">Database bahan</button></div>`;
+  let body="";
+  if(katalogTab==="menu"){
+    body = `<div class="menus">${state.menus.map(m=>{ const t=recipeTotals(m.items); const done=isDuplicate(m.id,todayKey(),"sarapan");
+      return `<article class="card menu-card"><div class="pic">${plateSVG(m.items,132)}${hasSim(m.items)?'<span class="chip sim">ada data SIMULASI</span>':""}${done?'<span class="chip ok" style="left:auto;right:10px;position:absolute;top:10px">Sudah dicatat hari ini</span>':""}</div>
+        <div class="body"><div><h3>${esc(m.name)}</h3><p class="small muted" style="margin-top:4px">${esc(m.desc)}</p></div>
+        <div class="stats"><div><b>${fmt0.format(t.kcal)}</b>kkal</div><div><b>${fmt1.format(t.protein)} g</b>protein</div><div><b>${fmtRp(m.cost)}</b>per porsi</div></div>
+        <div class="acts"><button class="btn primary sm" data-action="menu-detail" data-id="${esc(m.id)}">Lihat detail</button><button class="btn sm" data-action="menu-qr" data-id="${esc(m.id)}">${ICON.qr} QR</button></div></div></article>`; }).join("")}</div>
+      <div class="row"><button class="btn" data-action="menu-new">+ Menu baru</button><button class="btn ghost" data-action="menus-reset">Kembalikan menu bawaan</button></div>`;
+  } else {
+    body = `<div class="card"><div class="card-h"><h2>Database bahan</h2><button class="btn sm primary" data-action="food-edit" data-id="">+ Bahan baru</button></div>
+      <p class="small muted" style="margin-bottom:10px">Nilai per 100 g bagian yang dapat dimakan. Label <span class="chip ok">rujukan</span> = dikutip dari sumber tertulis; <span class="chip sim">SIMULASI</span> = contoh, belum diverifikasi.</p>
+      <div class="tbl-wrap"><table><thead><tr><th>Bahan</th><th>Kondisi</th><th class="n">Energi</th><th class="n">Protein</th><th class="n">KH</th><th class="n">Lemak</th><th class="n">Serat</th><th>Sumber</th><th></th></tr></thead><tbody>
+      ${state.foods.map(f=>`<tr><td><b>${esc(f.name)}</b><div class="small muted">${esc(CATS[f.cat]||f.cat)}${f.local?" · lokal":""}</div></td><td>${esc(f.state)}</td><td class="n">${fmtN(toNum(f.kcal),"kcal")}</td><td class="n">${fmtN(toNum(f.protein))}</td><td class="n">${fmtN(toNum(f.carb))}</td><td class="n">${fmtN(toNum(f.fat))}</td><td class="n">${f.fiber===null||f.fiber===undefined?"n/a":fmtN(toNum(f.fiber))}</td>
+        <td><span class="chip ${f.status==="simulasi"?"sim":"ok"}">${f.status==="simulasi"?"SIMULASI":"rujukan"}</span><div class="small muted">${esc(f.src)}</div></td><td><button class="btn sm" data-action="food-edit" data-id="${esc(f.id)}">Edit</button></td></tr>`).join("")}
+      </tbody></table></div><div class="row" style="margin-top:12px"><button class="btn ghost sm" data-action="foods-reset">Kembalikan database bawaan</button></div></div>`;
+  }
+  return `<div class="grid" style="gap:18px"><div class="hello"><div><p class="date">Alternatif sarapan pangan lokal</p><h1>Katalog Menu</h1></div>${tabs}</div>${body}</div>`;
+}
+function menuDetail(id, opts){
+  const m=menuById(id);
+  if(!m){ openModal(`<div class="modal-h"><h2>Menu tidak ditemukan</h2>${xBtn()}</div><p>Kode menu <b>${esc(id)}</b> tidak ada di katalog perangkat ini. QR mungkin rusak, salah ketik, atau menu sudah dihapus.</p><div class="row"><button class="btn primary" data-action="close-go" data-view="katalog">Kembali ke katalog</button></div>`,"sm"); return; }
+  const t=recipeTotals(m.items);
+  const date=(opts&&opts.date)||todayKey(), sess=(opts&&opts.session)||"sarapan";
+  const rows=m.items.map(i=>{ const f=foodById(i.foodId); const n=nutrientsOfItem(per100Of(i),i.grams);
+    return `<tr><td><b>${esc(f?f.name:i.foodId)}</b>${f&&f.status==="simulasi"?' <span class="chip sim">SIMULASI</span>':""}${!f?' <span class="chip warn">bahan tidak ada</span>':""}<div class="small muted">${f?esc(f.state)+" · "+esc(String(f.src).split(/[,—(]/)[0].trim()):""}</div></td><td class="n">${fmt0.format(toNum(i.grams)||0)} g</td><td class="n">${fmtN(n.kcal,"kcal")}</td><td class="n">${fmtN(n.protein)}</td><td class="n">${fmtN(n.carb)}</td><td class="n">${fmtN(n.fat)}</td><td class="n">${n.fiber===null?"n/a":fmtN(n.fiber)}</td></tr>`; }).join("");
+  openModal(`<div class="modal-h"><div><span class="eyebrow">${esc(m.id)}</span><h2 style="margin-top:4px">${esc(m.name)}</h2><p class="small muted" style="margin-top:4px">${esc(m.desc)}</p></div>${xBtn()}</div>
+    <div class="row" style="gap:16px;align-items:center"><div style="flex:none">${plateSVG(m.items,96)}</div>
+      <div class="grid mstats" style="flex:1;min-width:220px;gap:8px"><div><span class="eyebrow">Energi</span><div class="big num" style="font-size:clamp(1.2rem,5vw,1.8rem)">${fmt0.format(t.kcal)}<small>kkal</small></div></div><div><span class="eyebrow">Protein</span><div class="big num" style="font-size:clamp(1.2rem,5vw,1.8rem)">${fmt1.format(t.protein)}<small>g</small></div></div><div><span class="eyebrow">Biaya</span><div class="big num" style="font-size:clamp(1rem,4.2vw,1.4rem)">${fmtRp(m.cost)}</div></div></div></div>
+    <div class="tbl-wrap"><table><thead><tr><th>Bahan</th><th class="n">Berat</th><th class="n">kkal</th><th class="n">P (g)</th><th class="n">KH (g)</th><th class="n">L (g)</th><th class="n">S (g)</th></tr></thead><tbody>${rows}</tbody>
+      <tfoot><tr><td>Total estimasi</td><td></td><td class="n">${fmtN(t.kcal,"kcal")}</td><td class="n">${fmtN(t.protein)}</td><td class="n">${fmtN(t.carb)}</td><td class="n">${fmtN(t.fat)}</td><td class="n">${t.missing.fiber?"≥ ":""}${fmtN(t.fiber)}</td></tr></tfoot></table></div>
+    <p class="small muted">Cara membuat: ${esc(m.steps||"-")}</p>
+    <p class="small muted">Catatan perhitungan: berat = bagian yang dapat dimakan sesuai kondisi bahan (mentah/matang) di tabel. Nilai = berat/100 × nilai per 100 g, lalu dijumlahkan. Bumbu minor (garam, bawang, cabai) tidak dihitung.${t.missing.fiber?" Serat sebagian bahan belum tersedia.":""}</p>
+    <div class="card" style="box-shadow:none;background:var(--surface-2);border:0;padding:14px">
+      <div class="form-grid"><div class="field"><label for="rec-date">Tanggal</label><input type="date" id="rec-date" value="${esc(date)}" max="${addDays(todayKey(),1)}"></div>
+        <div class="field"><label for="rec-session">Waktu makan</label><select id="rec-session">${SESSIONS.map(s=>`<option value="${s.id}" ${sess===s.id?"selected":""}>${s.label}</option>`).join("")}</select></div></div>
+      <div id="rec-status" style="margin-top:10px"></div>
+      <div class="row" style="margin-top:10px" id="rec-actions"></div>
+    </div>
+    <div class="row"><button class="btn sm" data-action="menu-qr" data-id="${esc(m.id)}">${ICON.qr} Tampilkan QR</button><button class="btn sm" data-action="menu-edit" data-id="${esc(m.id)}">Edit menu</button></div>`);
+  const upd=()=>{ const d=document.getElementById("rec-date").value, s=document.getElementById("rec-session").value; const dup=isDuplicate(m.id,d,s);
+    const existing = state.logs.find(l=>l.source==="menu"&&l.menuId===m.id&&l.date===d&&l.session===s);
+    document.getElementById("rec-status").innerHTML = dup ? `<div class="banner info"><span><b>Sudah dicatat.</b> Menu ini sudah tercatat untuk ${esc(sessionLabel(s))} ${esc(dateLabel(d,{day:"numeric",month:"long"}))}. Pencatatan ganda dicegah di perangkat ini.</span></div>` : "";
+    document.getElementById("rec-actions").innerHTML = dup
+      ? `<button class="btn" disabled aria-disabled="true">✓ Sudah dicatat</button><button class="btn sm" data-action="close-go" data-view="riwayat">Lihat riwayat</button><button class="btn sm danger" data-action="delete-log" data-id="${existing.id}">Batalkan catatan</button>`
+      : `<button class="btn primary" data-action="record-menu" data-id="${esc(m.id)}">Catat sebagai ${esc(sessionLabel(s).toLowerCase())}</button>`; };
+  document.getElementById("rec-date").addEventListener("change",upd); document.getElementById("rec-session").addEventListener("change",upd); upd();
+}
+function recordMenu(id){
+  const m=menuById(id); if(!m) return;
+  const d=document.getElementById("rec-date").value, s=document.getElementById("rec-session").value;
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(d)){ toast("Pilih tanggal yang valid"); return; }
+  if(isDuplicate(m.id,d,s)){ toast("Sudah dicatat. Pencatatan ganda dicegah."); menuDetail(id,{date:d,session:s}); return; }
+  const items=m.items.map(i=>snapshotItem(i.foodId,i.grams)).filter(Boolean);
+  if(!items.length){ toast("Menu belum punya bahan yang valid"); return; }
+  const now=new Date().toISOString();
+  state.logs.push({id:uid(),date:d,time:d===todayKey()?nowTime():"07:00",session:s,name:m.name,source:"menu",menuId:m.id,cost:toNum(m.cost),items,createdAt:now,updatedAt:now});
+  saveState(); toast(`${m.name} dicatat`); menuDetail(id,{date:d,session:s}); render();
+}
+function menuEdit(id){
+  const isNew=!id; const m=isNew?{id:"",name:"",desc:"",cost:"",steps:"",items:[{foodId:"nasi-putih",grams:150}]}:clone(menuById(id));
+  if(!m) return;
+  let items=m.items;
+  const foodOpts=sel=>state.foods.map(f=>`<option value="${esc(f.id)}" ${f.id===sel?"selected":""}>${esc(f.name)} (${f.state})</option>`).join("");
+  const draw=()=>{ document.getElementById("me-items").innerHTML = items.map((it,i)=>`<div class="item" style="grid-template-columns:minmax(0,1fr) 100px 36px"><div class="field"><label for="me-f-${i}" style="position:absolute;left:-9999px">Bahan ${i+1}</label><select id="me-f-${i}" data-i="${i}" class="me-f">${foodOpts(it.foodId)}</select></div><div class="gram"><label for="me-g-${i}" style="position:absolute;left:-9999px">Berat bahan ${i+1}</label><input id="me-g-${i}" type="number" min="1" max="2000" data-i="${i}" class="me-g" value="${esc(it.grams)}"><span>g</span></div><button class="iconbtn" data-i="${i}" aria-label="Hapus bahan ${i+1}" data-local="me-x">${ICON.trash}</button></div>`).join("");
+    const t=recipeTotals(items.filter(i=>toNum(i.grams)>0)); document.getElementById("me-tot").textContent=`Total estimasi: ${fmt0.format(t.kcal)} kkal · protein ${fmt1.format(t.protein)} g`; };
+  openModal(`<div class="modal-h"><h2>${isNew?"Menu baru":"Edit menu"}</h2>${xBtn()}</div>
+    <div class="form-grid"><div class="field span2"><label for="me-name">Nama menu</label><input type="text" id="me-name" maxlength="60" value="${esc(m.name)}"></div>
+    <div class="field span2"><label for="me-desc">Deskripsi singkat</label><input type="text" id="me-desc" maxlength="140" value="${esc(m.desc)}"></div>
+    <div class="field"><label for="me-cost">Estimasi biaya per porsi (Rp)</label><input type="number" id="me-cost" min="0" step="500" value="${esc(m.cost)}"></div>
+    <div class="field"><label for="me-id">Kode menu (untuk QR)</label><input type="text" id="me-id" value="${esc(m.id)}" ${isNew?"":"readonly"} placeholder="menu-nama-menu"><span class="hint">${isNew?"Huruf kecil, angka, tanda minus. Awali dengan menu-":"Kode tidak diubah agar QR lama tetap berfungsi."}</span></div>
+    <div class="field span2"><label for="me-steps">Petunjuk persiapan</label><textarea id="me-steps">${esc(m.steps)}</textarea></div></div>
+    <div><div class="card-h" style="margin-bottom:8px"><h3>Bahan &amp; berat</h3><button class="btn sm" id="me-add">+ Bahan</button></div><div class="items" id="me-items"></div><p class="small muted" id="me-tot" style="margin-top:8px"></p></div>
+    <div id="me-err" role="alert"></div>
+    <div class="row" style="justify-content:space-between">${isNew?"<span></span>":`<button class="btn danger sm" data-action="menu-delete" data-id="${esc(m.id)}">Hapus menu</button>`}<span class="row"><button class="btn" data-action="close">Batal</button><button class="btn primary" id="me-save">Simpan menu</button></span></div>`);
+  draw();
+  const box=document.getElementById("me-items");
+  box.addEventListener("change",e=>{ if(e.target.classList.contains("me-f")){ items[+e.target.dataset.i].foodId=e.target.value; draw(); }});
+  box.addEventListener("input",e=>{ if(e.target.classList.contains("me-g")){ items[+e.target.dataset.i].grams=toNum(e.target.value); const t=recipeTotals(items.filter(i=>toNum(i.grams)>0)); document.getElementById("me-tot").textContent=`Total estimasi: ${fmt0.format(t.kcal)} kkal · protein ${fmt1.format(t.protein)} g`; }});
+  box.addEventListener("click",e=>{ const b=e.target.closest('[data-local="me-x"]'); if(b){ items.splice(+b.dataset.i,1); draw(); }});
+  document.getElementById("me-add").addEventListener("click",()=>{ items.push({foodId:state.foods[0].id,grams:50}); draw(); });
+  document.getElementById("me-save").addEventListener("click",()=>{
+    const errs=[]; const name=document.getElementById("me-name").value.trim(); const cost=document.getElementById("me-cost").value; let mid=document.getElementById("me-id").value.trim();
+    if(!name) errs.push("Nama menu wajib diisi.");
+    if(cost!==""&&(toNum(cost)===null||toNum(cost)<0)) errs.push("Biaya harus angka 0 atau lebih.");
+    if(!items.length) errs.push("Tambahkan minimal satu bahan.");
+    items.forEach((it,i)=>{ if(!(toNum(it.grams)>0&&toNum(it.grams)<=2000)) errs.push(`Berat bahan ke-${i+1} harus 1–2.000 g.`); });
+    if(isNew){ if(!/^menu-[a-z0-9-]{2,40}$/.test(mid)) errs.push("Kode menu harus diawali 'menu-' lalu huruf kecil/angka/minus."); else if(menuById(mid)) errs.push("Kode menu sudah dipakai."); }
+    if(errs.length){ document.getElementById("me-err").innerHTML=`<div class="banner err">${errs.map(esc).join("<br>")}</div>`; return; }
+    const rec={id:isNew?mid:m.id,name,desc:document.getElementById("me-desc").value.trim(),cost:cost===""?null:toNum(cost),steps:document.getElementById("me-steps").value.trim(),items:items.map(i=>({foodId:i.foodId,grams:toNum(i.grams)}))};
+    if(isNew) state.menus.push(rec); else state.menus[state.menus.findIndex(x=>x.id===m.id)]=rec;
+    saveState(); closeModal(); render(); toast("Menu disimpan");
+  });
+}
+function foodEdit(id){
+  const isNew=!id; const f=isNew?{id:"",name:"",cat:"lauk",state:"mentah",kcal:"",protein:"",carb:"",fat:"",fiber:"",bdd:100,src:"",status:"simulasi",local:true,def:50,note:""}:clone(foodById(id));
+  const num=(k,l,u)=>`<div class="field"><label for="fe-${k}">${l} <span class="hint">(${u}/100 g)</span></label><input type="number" id="fe-${k}" step="0.1" min="0" value="${f[k]===null?"":esc(f[k])}"></div>`;
+  openModal(`<div class="modal-h"><h2>${isNew?"Bahan baru":"Edit bahan"}</h2>${xBtn()}</div>
+   <div class="form-grid"><div class="field span2"><label for="fe-name">Nama bahan</label><input type="text" id="fe-name" maxlength="60" value="${esc(f.name)}"></div>
+   <div class="field"><label for="fe-cat">Kategori</label><select id="fe-cat">${Object.entries(CATS).map(([k,v])=>`<option value="${k}" ${f.cat===k?"selected":""}>${v}</option>`).join("")}</select></div>
+   <div class="field"><label for="fe-state">Kondisi data</label><select id="fe-state"><option value="mentah" ${f.state==="mentah"?"selected":""}>Mentah</option><option value="matang" ${f.state==="matang"?"selected":""}>Matang</option></select></div>
+   ${num("kcal","Energi","kkal")}${num("protein","Protein","g")}${num("carb","Karbohidrat","g")}${num("fat","Lemak","g")}
+   <div class="field"><label for="fe-fiber">Serat <span class="hint">(g/100 g, kosongkan jika tidak ada data)</span></label><input type="number" id="fe-fiber" step="0.1" min="0" value="${f.fiber===null||f.fiber===undefined?"":esc(f.fiber)}"></div>
+   <div class="field"><label for="fe-bdd">Bagian dapat dimakan (%)</label><input type="number" id="fe-bdd" min="1" max="100" value="${esc(f.bdd)}"></div>
+   <div class="field"><label for="fe-status">Status data</label><select id="fe-status"><option value="rujukan" ${f.status==="rujukan"?"selected":""}>Rujukan (ada sumber tertulis)</option><option value="simulasi" ${f.status==="simulasi"?"selected":""}>SIMULASI (contoh)</option></select></div>
+   <div class="field"><label for="fe-local"><input type="checkbox" id="fe-local" ${f.local?"checked":""}> Pangan lokal</label></div>
+   <div class="field span2"><label for="fe-src">Sumber data</label><input type="text" id="fe-src" maxlength="120" value="${esc(f.src)}" placeholder="mis. TKPI 2017, kode … (wajib untuk status rujukan)"></div>
+   <div class="field span2"><label for="fe-note">Catatan penimbangan</label><input type="text" id="fe-note" maxlength="200" value="${esc(f.note)}"></div></div>
+   <p class="small muted">Perubahan berlaku untuk menu dan catatan baru. Catatan lama menyimpan nilai saat dicatat.</p>
+   <div id="fe-err" role="alert"></div>
+   <div class="row" style="justify-content:space-between">${isNew?"<span></span>":`<button class="btn danger sm" id="fe-del">Hapus bahan</button>`}<span class="row"><button class="btn" data-action="close">Batal</button><button class="btn primary" id="fe-save">Simpan bahan</button></span></div>`);
+  document.getElementById("fe-save").addEventListener("click",()=>{
+    const g=k=>document.getElementById("fe-"+k).value; const errs=[]; const rec={...f};
+    rec.name=g("name").trim(); if(!rec.name) errs.push("Nama bahan wajib diisi.");
+    [["kcal",0,950],["protein",0,100],["carb",0,100],["fat",0,100]].forEach(([k,lo,hi])=>{ const v=toNum(g(k)); if(v===null||v<lo||v>hi) errs.push(`${({kcal:"Energi",protein:"Protein",carb:"Karbohidrat",fat:"Lemak"})[k]} harus angka ${lo}–${hi}.`); else rec[k]=v; });
+    const fb=g("fiber"); if(fb===""){ rec.fiber=null; } else { const v=toNum(fb); if(v===null||v<0||v>100) errs.push("Serat harus angka 0–100 atau dikosongkan."); else rec.fiber=v; }
+    if(rec.protein+rec.carb+rec.fat+(rec.fiber||0)>100.5) errs.push("Jumlah protein, karbohidrat, lemak, dan serat melebihi 100 g per 100 g.");
+    const bdd=toNum(g("bdd")); if(bdd===null||bdd<1||bdd>100) errs.push("BDD harus 1–100%."); else rec.bdd=bdd;
+    rec.cat=g("cat"); rec.state=g("state"); rec.status=g("status"); rec.src=g("src").trim(); rec.note=g("note").trim(); rec.local=document.getElementById("fe-local").checked;
+    if(rec.status==="rujukan"&&!rec.src) errs.push("Status rujukan memerlukan sumber data. Jika belum ada, pilih SIMULASI.");
+    if(rec.status==="simulasi"&&!rec.src) rec.src=SRC.SIM;
+    if(errs.length){ document.getElementById("fe-err").innerHTML=`<div class="banner err">${errs.map(esc).join("<br>")}</div>`; return; }
+    if(isNew){ let base="bahan-"+rec.name.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,30); let nid=base,i=2; while(foodById(nid)) nid=base+"-"+(i++); rec.id=nid; state.foods.push(rec); }
+    else state.foods[state.foods.findIndex(x=>x.id===f.id)]=rec;
+    saveState(); closeModal(); render(); toast("Bahan disimpan");
+  });
+  const del=document.getElementById("fe-del");
+  if(del) del.addEventListener("click",async()=>{
+    const used=state.menus.filter(m=>m.items.some(i=>i.foodId===f.id));
+    if(used.length){ document.getElementById("fe-err").innerHTML=`<div class="banner err">Bahan ini dipakai di menu: ${used.map(m=>esc(m.name)).join(", ")}. Hapus dari menu tersebut dulu.</div>`; return; }
+    if(await confirmDialog({title:"Hapus bahan?",body:`${esc(f.name)} akan dihapus dari database. Catatan lama tidak berubah.`,ok:"Hapus",danger:true})){ state.foods=state.foods.filter(x=>x.id!==f.id); saveState(); render(); toast("Bahan dihapus"); }
+  });
+}
+
+/* ---------- 10. QR ---------- */
+function baseUrl(){
+  const s=(state.settings.qrBase||"").trim(); if(s) return s;
+  if(/^https?:$/.test(location.protocol)) return location.origin+location.pathname;
+  return location.href.split(/[?#]/)[0];
+}
+function menuUrl(id){ const b=baseUrl(); return /claude\.ai\//.test(b) ? b.split("#")[0]+"#"+id : b.split("?")[0]+"?menu="+encodeURIComponent(id); }
+function qrDataUrl(text){
+  if(!window.SPQR) return null;
+  try{
+    const q=new window.SPQR.QRCode(-1, window.SPQR.Level.M); q.addData(text); q.make();
+    const n=q.getModuleCount(), cell=8, m=4, size=(n+m*2)*cell;
+    const c=document.createElement("canvas"); c.width=c.height=size; const x=c.getContext("2d");
+    x.fillStyle="#fff"; x.fillRect(0,0,size,size); x.fillStyle="#000";
+    for(let r=0;r<n;r++) for(let k=0;k<n;k++) if(q.isDark(r,k)) x.fillRect((k+m)*cell,(r+m)*cell,cell,cell);
+    return c.toDataURL("image/png");
+  }catch(e){ console.error(e); return null; }
+}
+function menuQR(id){
+  const m=menuById(id); if(!m) return;
+  const url=menuUrl(id); const img=qrDataUrl(url);
+  const local = /^file:/.test(url) || /localhost|127\.0\.0\.1/.test(url);
+  openModal(`<div class="modal-h"><div><span class="eyebrow">QR menu</span><h2 style="margin-top:4px">${esc(m.name)}</h2></div>${xBtn()}</div>
+    ${img?`<div class="qrbox"><img id="qr-img" src="${img}" alt="QR Code untuk ${esc(m.name)}"></div>`:`<div class="banner err">Pembuat QR tidak tersedia di browser ini. Salin URL di bawah lalu buat QR dengan aplikasi pembuat QR apa pun.</div>`}
+    <div class="field"><label for="qr-url">URL menu</label><div class="urlbox"><input type="text" id="qr-url" readonly value="${esc(url)}"><button class="btn" data-action="copy-url">Salin</button></div>
+      <span class="hint">QR hanya berisi alamat ini dan kode <b>${esc(id)}</b>. Pencegahan pencatatan ganda dilakukan oleh aplikasi di tiap perangkat, bukan oleh QR.</span></div>
+    ${local?`<div class="banner demo"><span>Alamat ini masih file lokal, jadi ponsel lain tidak bisa membukanya. Unggah aplikasi ke hosting statis gratis lalu isi <b>URL aplikasi</b> di Profil → Pengaturan.</span></div>`:""}
+    <div class="row">${img?`<button class="btn primary" data-action="qr-download" data-id="${esc(id)}">Simpan gambar QR</button><button class="btn" data-action="qr-print" data-id="${esc(id)}">Cetak QR</button>`:""}<button class="btn" data-action="menu-detail" data-id="${esc(id)}">Detail menu</button></div>`,"sm");
+}
+function downloadBlob(name, data, type){
+  try{ const blob = data instanceof Blob ? data : new Blob([data],{type}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500); return true; }
+  catch(e){ toast("Browser ini memblokir unduhan. Gunakan tombol Salin."); return false; }
+}
+
+/* ---------- 11. RIWAYAT ---------- */
+let histDays = 14;
+function vRiwayat(){
+  const dates=[...new Set(state.logs.map(l=>l.date))].sort().reverse();
+  const shown=dates.slice(0,histDays);
+  const body = shown.length ? shown.map(d=>{ const ls=logsOn(d); const t=totalsForLogs(ls); const cost=ls.reduce((a,l)=>a+(toNum(l.cost)||0),0);
+    return `<section class="card"><div class="card-h"><h3>${esc(dateLabel(d))}${d===todayKey()?' <span class="chip ok">Hari ini</span>':""}</h3><span class="small muted num">${fmt0.format(t.kcal)} kkal · P ${fmt1.format(t.protein)} g · ${fmtRp(cost)}</span></div><div class="loglist">${ls.map(logRow).join("")}</div></section>`; }).join("")
+    : `<div class="empty"><b>Riwayat masih kosong.</b><span>Catatan yang kamu simpan akan muncul di sini.</span><button class="btn primary" data-action="go" data-view="catat">Catat sarapan</button></div>`;
+  return `<div class="grid" style="gap:18px"><div class="hello"><div><p class="date">${state.logs.length} catatan tersimpan di perangkat ini</p><h1>Riwayat</h1></div>
+    <div class="row"><button class="btn sm" data-action="export-json">Ekspor JSON</button><button class="btn sm" data-action="export-csv">Ekspor CSV</button><label class="btn sm" for="import-file" style="cursor:pointer">Impor JSON</label><input type="file" id="import-file" accept="application/json,.json" style="position:absolute;left:-9999px" data-change="import"></div></div>
+    ${body}${dates.length>histDays?`<button class="btn" data-action="more-hist">Tampilkan lebih banyak</button>`:""}</div>`;
+}
+function exportPayload(){ return {app:"SARAPAN PINTAR",schemaVersion:SCHEMA_VERSION,exportedAt:new Date().toISOString(),kind:state.kind,profile:state.profile,settings:state.settings,foods:state.foods,menus:state.menus,logs:state.logs}; }
+function exportCSV(){
+  const head=["tanggal","jam","waktu_makan","nama","sumber","kode_menu","energi_kkal","protein_g","karbohidrat_g","lemak_g","serat_g","biaya_rp","ada_simulasi"];
+  const q=v=>{ const s=String(v??""); return /[",\n;]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; };
+  const rows=state.logs.slice().sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)).map(l=>{ const t=recipeTotals(l.items); return [l.date,l.time,sessionLabel(l.session),l.name,l.source,l.menuId||"",t.kcal.toFixed(0),t.protein.toFixed(1),t.carb.toFixed(1),t.fat.toFixed(1),t.missing.fiber?"":t.fiber.toFixed(1),l.cost??"",hasSim(l.items)?"ya":"tidak"].map(q).join(","); });
+  return "﻿"+head.join(",")+"\n"+rows.join("\n");
+}
+function validateImport(o){
+  if(!o||typeof o!=="object") return "Berkas bukan JSON objek.";
+  if(o.app!=="SARAPAN PINTAR") return "Berkas ini bukan ekspor SARAPAN PINTAR.";
+  if(o.schemaVersion!==SCHEMA_VERSION) return `Versi data ${o.schemaVersion} tidak didukung (butuh ${SCHEMA_VERSION}).`;
+  if(!Array.isArray(o.logs)||!Array.isArray(o.foods)||!Array.isArray(o.menus)) return "Struktur data tidak lengkap.";
+  for(const l of o.logs){ if(!l||!/^\d{4}-\d{2}-\d{2}$/.test(l.date)||!Array.isArray(l.items)) return "Ada catatan dengan tanggal atau bahan tidak valid.";
+    for(const i of l.items){ if(!(toNum(i.grams)>0)||!i.per100||toNum(i.per100.kcal)===null) return "Ada bahan dengan berat atau nilai gizi tidak valid."; } }
+  for(const f of o.foods){ if(!f||!f.id||!f.name||toNum(f.kcal)===null) return "Ada bahan di database tanpa nama atau energi."; }
+  return null;
+}
+
+/* ---------- 12. PROFIL & PENGATURAN ---------- */
+function vProfil(){
+  const p=state.profile||{nick:"",age:"",sex:"",weight:"",height:"",activity:""};
+  const tg=getTargets();
+  const tgBox = tg.ok ? `<div class="banner info"><span>Target estimasi: <b>AKG 2019, ${esc(tg.group)}</b> — ${fmt0.format(tg.values.kcal)} kkal, protein ${tg.values.protein} g, karbohidrat ${tg.values.carb} g, lemak ${tg.values.fat} g, serat ${tg.values.fiber} g per hari. Angka ini acuan kelompok untuk tubuh rujukan ${tg.row.bb} kg / ${tg.row.tb} cm, bukan kebutuhan individual.</span></div>
+    ${state.profile&&Math.abs(state.profile.weight-tg.row.bb)/tg.row.bb>0.2?`<div class="banner demo"><span>Berat badanmu berbeda lebih dari 20% dari berat rujukan AKG kelompok ini (${tg.row.bb} kg). Kebutuhan sebenarnya bisa berbeda; konsultasikan dengan tenaga gizi.</span></div>`:""}`
+    : `<div class="banner demo"><span><b>Target personal belum ditetapkan.</b> ${esc(tg.reason)}</span></div>`;
+  return `<div class="grid" style="gap:18px"><div class="hello"><div><p class="date">${mode==="demo"?"Mode Demo · profil SIMULASI":"Data Saya"}</p><h1>Profil</h1></div></div>
+  <div class="grid g2" style="align-items:start">
+   <form class="card grid" id="profile-form" novalidate style="gap:14px">
+    <h2>Data diri</h2>
+    <div class="form-grid">
+      <div class="field span2"><label for="p-nick">Nama panggilan <span class="hint">(opsional)</span></label><input type="text" id="p-nick" maxlength="30" value="${esc(p.nick)}" autocomplete="nickname"></div>
+      <div class="field"><label for="p-age">Usia (tahun)</label><input type="number" id="p-age" min="5" max="100" step="1" inputmode="numeric" value="${esc(p.age)}" required></div>
+      <div class="field"><label for="p-sex">Jenis kelamin biologis</label><select id="p-sex"><option value="" ${!p.sex?"selected":""}>Pilih…</option><option value="L" ${p.sex==="L"?"selected":""}>Laki-laki</option><option value="P" ${p.sex==="P"?"selected":""}>Perempuan</option></select><span class="hint">Dipakai karena tabel AKG 2019 dibedakan menurut jenis kelamin.</span></div>
+      <div class="field"><label for="p-weight">Berat badan (kg)</label><input type="number" id="p-weight" min="15" max="250" step="0.1" inputmode="decimal" value="${esc(p.weight)}" required></div>
+      <div class="field"><label for="p-height">Tinggi badan (cm)</label><input type="number" id="p-height" min="90" max="230" step="0.1" inputmode="decimal" value="${esc(p.height)}" required></div>
+      <div class="field span2"><label for="p-activity">Tingkat aktivitas fisik</label><select id="p-activity"><option value="" ${!p.activity?"selected":""}>Pilih…</option><option value="rendah" ${p.activity==="rendah"?"selected":""}>Rendah — banyak duduk</option><option value="sedang" ${p.activity==="sedang"?"selected":""}>Sedang — aktif berjalan, olahraga ringan</option><option value="tinggi" ${p.activity==="tinggi"?"selected":""}>Tinggi — olahraga rutin/berat</option></select><span class="hint">Dicatat sebagai konteks. AKG 2019 tidak menyesuaikan target menurut aktivitas, jadi target tidak berubah.</span></div>
+    </div>
+    <div id="p-err" role="alert"></div>
+    <div class="row" style="justify-content:flex-end">${state.profile?`<button type="button" class="btn ghost" data-action="profile-clear">Hapus profil</button>`:""}<button type="submit" class="btn primary">Simpan profil</button></div>
+    ${tgBox}
+   </form>
+   <div class="grid" style="gap:16px">
+    <div class="card grid" style="gap:12px"><h2>Pengaturan</h2>
+      <label class="row" for="s-akg" style="font-weight:500"><input type="checkbox" id="s-akg" ${state.settings.useAkg?"checked":""}> Bandingkan asupan dengan target AKG 2019</label>
+      <div class="field"><label for="s-base">URL aplikasi untuk QR</label><input type="url" id="s-base" placeholder="https://namamu.github.io/sarapan-pintar/" value="${esc(state.settings.qrBase)}"><span class="hint">Kosongkan untuk memakai alamat halaman ini (${esc(baseUrl())}). Isi setelah aplikasi di-hosting agar QR bisa dibuka ponsel lain.</span></div>
+      <div class="row"><button class="btn sm" data-action="save-settings">Simpan pengaturan</button></div>
+    </div>
+    <div class="card grid" style="gap:12px"><h2>Data &amp; mode</h2>
+      <p class="small muted">Sedang memakai: <b>${mode==="demo"?"Mode Demo (SIMULASI)":"Data Saya"}</b>. Kedua mode disimpan terpisah di browser ini dan tidak tersinkron ke perangkat lain.</p>
+      <div class="row">${mode==="demo"?`<button class="btn primary sm" data-action="switch-mode" data-mode="user">Pindah ke Data Saya</button><button class="btn sm" data-action="reset-demo">Reset Demo</button>`:`<button class="btn sm" data-action="switch-mode" data-mode="demo">Buka Mode Demo</button>`}</div>
+      <div class="row"><button class="btn sm" data-action="export-json">Ekspor JSON</button><button class="btn sm" data-action="copy-json">Salin data JSON</button></div>
+      <button class="btn danger sm" data-action="wipe-all" style="align-self:flex-start">Hapus seluruh data lokal</button>
+      <p class="small muted">Penyimpanan lokal: ${Store.ok?"aktif (localStorage)":"<b>tidak tersedia</b>, data hanya bertahan selama halaman terbuka"}.</p>
+    </div>
+   </div></div></div>`;
+}
+function bindProfile(){
+  const form=document.getElementById("profile-form"); if(!form) return;
+  form.addEventListener("submit",e=>{ e.preventDefault();
+    const g=id=>document.getElementById(id).value.trim(); const errs=[]; const mark=(id,bad)=>document.getElementById(id).setAttribute("aria-invalid",String(bad));
+    const age=toNum(g("p-age")), w=toNum(g("p-weight")), h=toNum(g("p-height"));
+    const ageBad=age===null||!Number.isInteger(age)||age<5||age>100; mark("p-age",ageBad); if(ageBad) errs.push("Usia harus bilangan bulat 5–100 tahun.");
+    const wBad=w===null||w<15||w>250; mark("p-weight",wBad); if(wBad) errs.push("Berat badan harus 15–250 kg.");
+    const hBad=h===null||h<90||h>230; mark("p-height",hBad); if(hBad) errs.push("Tinggi badan harus 90–230 cm.");
+    if(!g("p-activity")) errs.push("Pilih tingkat aktivitas fisik.");
+    if(!ageBad&&!wBad&&!hBad){ const bmi=w/((h/100)**2); if(bmi<10||bmi>60) errs.push("Kombinasi berat dan tinggi tidak masuk akal. Periksa kembali angkanya."); }
+    if(errs.length){ document.getElementById("p-err").innerHTML=`<div class="banner err">${errs.map(esc).join("<br>")}</div>`; return; }
+    state.profile={nick:g("p-nick").slice(0,30),age,sex:g("p-sex"),weight:w,height:h,activity:g("p-activity")};
+    saveState(); toast("Profil disimpan"); render();
+  });
+}
+
+/* ---------- 13. TENTANG & METODOLOGI ---------- */
+function vTentang(){
+  return `<div class="grid" style="gap:18px"><div class="hello"><div><p class="date">SARAPAN PINTAR · versi data ${SCHEMA_VERSION}</p><h1>Tentang &amp; Metodologi</h1></div><button class="btn" data-action="go" data-view="dashboard">Kembali ke dashboard</button></div>
+  <div class="card prose">
+    <p><b>SARAPAN PINTAR</b> adalah prototipe edukasi gizi untuk proyek kokurikuler. Hasilnya adalah <b>estimasi</b>, bukan diagnosis, bukan rekomendasi medis personal, dan belum diuji akurasinya terhadap penimbangan atau analisis laboratorium.</p>
+    <h2>Cara menghitung nutrisi</h2>
+    <div class="formula">Nutrisi bahan = berat bagian yang dimakan (g) ÷ 100 × nilai per 100 g</div>
+    <p>Nilai semua bahan dijumlahkan untuk satu menu, lalu semua catatan dijumlahkan untuk satu hari. Bila nilai serat sebuah bahan belum tersedia, total serat ditandai "≥" (nilai minimal) dan tidak diisi angka karangan. Hasil dibulatkan: energi ke kkal terdekat, zat gizi lain 1 desimal.</p>
+    <h2>Sumber data komposisi pangan</h2>
+    <ul><li><b>TKPI 2017</b> (Tabel Komposisi Pangan Indonesia, Kemenkes RI; dapat dicek di panganku.org): nasi, telur ayam ras, tempe, tahu.</li>
+    <li><b>USDA FoodData Central, SR Legacy</b>: sayur, buah, kacang tanah, edamame, ubi, singkong, jagung, susu, ayam, minyak. Dipakai karena datanya terbuka; nilai varietas Indonesia bisa berbeda.</li>
+    <li><b>SIMULASI</b>: tape singkong. Ditandai kuning di seluruh aplikasi dan tidak boleh dianggap data rujukan.</li></ul>
+    <p>Nilai dimasukkan secara manual dari sumber di atas. Sebelum presentasi, cocokkan ulang setiap angka dengan sumber aslinya; semua nilai bisa dikoreksi di Katalog → Database bahan.</p>
+    <h2>Bahan mentah dan matang</h2>
+    <p>Setiap bahan diberi label <b>mentah</b> atau <b>matang</b>. Berat yang dimasukkan harus sesuai label itu: nasi ditimbang matang, sedangkan tempe, tahu, dan sayur ditimbang mentah sebelum dimasak. Aplikasi tidak mengonversi berat matang ke mentah karena faktor penyusutan/penyerapan air belum tersedia. Minyak goreng dicatat terpisah sebagai perkiraan minyak yang terserap.</p>
+    <h2>Estimasi kebutuhan harian</h2>
+    <p>Target memakai <b>Angka Kecukupan Gizi (AKG) 2019</b>, Permenkes RI No. 28 Tahun 2019, menurut kelompok usia dan jenis kelamin (usia 10–49 tahun). Rumus energi dewasa tidak dipakai untuk remaja. AKG adalah angka kecukupan rata-rata kelompok dengan berat dan tinggi rujukan, sehingga bukan kebutuhan individual. Aktivitas fisik dicatat tetapi tidak mengubah target. Di luar rentang usia itu, atau bila target dimatikan, dashboard hanya menampilkan asupan tanpa persentase.</p>
+    <p>Rentang energi sarapan 15–30% dari kebutuhan harian mengikuti anjuran sarapan dalam Pedoman Gizi Seimbang (Kemenkes RI, 2014).</p>
+    <h2>Cara kerja QR</h2>
+    <p>Setiap menu punya kode unik, misalnya <code>menu-nasi-telur</code>. QR berisi URL <code>index.html?menu=menu-nasi-telur</code>. Saat dibuka, aplikasi membaca parameter <code>menu</code>, mencarinya di katalog lokal, lalu menampilkan detail menu. Kode yang tidak dikenal memunculkan pesan dan tombol kembali ke katalog. Gambar QR dibuat langsung di browser tanpa layanan luar.</p>
+    <h2>Batas pencegahan pencatatan ganda</h2>
+    <p>Satu menu hanya bisa dicatat sekali untuk kombinasi <b>kode menu + tanggal + waktu makan</b>. Pemeriksaan ini dilakukan dari data di browser yang sama. Tanpa server, aplikasi <b>tidak bisa</b> mencegah pencatatan ganda di perangkat lain, di browser lain, atau setelah data browser dihapus. Tidak ada fingerprinting perangkat.</p>
+    <h2>Penyimpanan data</h2>
+    <p>Profil, pengaturan, database bahan, menu, dan riwayat disimpan di <b>localStorage</b> browser ini. Mode Demo dan Data Saya disimpan terpisah. Data tidak dikirim ke server mana pun dan tidak tersinkron otomatis. Gunakan Ekspor JSON untuk cadangan dan Impor JSON untuk memindahkan data.</p>
+  </div></div>`;
+}
+
+/* ---------- 14. DEMO ---------- */
+function buildDemo(){
+  const s=freshState("demo");
+  s.profile={nick:"Raka (SIMULASI)",age:16,sex:"L",weight:55,height:165,activity:"sedang"};
+  const today=todayKey();
+  const tmp={foods:s.foods};
+  const snap=(id,g)=>{ const f=tmp.foods.find(x=>x.id===id); const per100={}; NKEYS.forEach(k=>per100[k]=toNum(f[k])); return {foodId:f.id,name:f.name,state:f.state,status:f.status,local:!!f.local,cat:f.cat,grams:g,per100}; };
+  const fromMenu=mid=>{ const m=s.menus.find(x=>x.id===mid); return {name:m.name,menuId:m.id,cost:m.cost,items:m.items.map(i=>snap(i.foodId,i.grams))}; };
+  const rot=["menu-nasi-telur","menu-ubi-edamame","menu-tempe-tahu","menu-jagung-pisang","menu-nasi-telur","menu-tempe-tahu"];
+  const lunch=[["nasi-putih",200],["ayam-dada",60],["kangkung",60],["minyak-sawit",8]];
+  const dinner=[["nasi-putih",180],["tempe",50],["tahu",50],["bayam",50],["minyak-sawit",8]];
+  const add=(d,time,session,o)=>{ const now=new Date().toISOString(); s.logs.push({id:uid(),date:d,time,session,name:o.name,source:o.menuId?"menu":"manual",menuId:o.menuId||null,cost:o.cost??null,items:o.items,createdAt:now,updatedAt:now}); };
+  for(let i=6;i>=1;i--){ const d=addDays(today,-i);
+    if(i!==3) add(d,"06:30","sarapan",fromMenu(rot[i-1]));
+    add(d,"12:30","siang",{name:"Makan siang (contoh)",cost:12000,items:lunch.map(([f,g])=>snap(f,g+(i%3)*10))});
+    add(d,"19:00","malam",{name:"Makan malam (contoh)",cost:10000,items:dinner.map(([f,g])=>snap(f,g))});
+  }
+  add(today,"06:40","sarapan",fromMenu("menu-nasi-pecel"));
+  return s;
+}
+
+/* ---------- 15. MODAL, KONFIRMASI, TOAST ---------- */
+let lastFocus=null;
+function xBtn(){ return `<button class="modal-x" data-action="close" aria-label="Tutup">${ICON.x}</button>`; }
+function openModal(html,size){
+  lastFocus = lastFocus || document.activeElement;
+  document.getElementById("modal-root").innerHTML=`<div class="modal-bg" data-action="bg-close"><div class="modal ${size||""}" role="dialog" aria-modal="true">${html}</div></div>`;
+  const first=document.querySelector(".modal button, .modal input, .modal select"); if(first) first.focus();
+}
+function closeModal(){ document.getElementById("modal-root").innerHTML=""; if(lastFocus&&lastFocus.focus) try{lastFocus.focus();}catch(e){} lastFocus=null; }
+function confirmDialog({title,body,ok,danger}){
+  return new Promise(res=>{
+    openModal(`<div class="modal-h"><h2>${esc(title)}</h2></div><p>${body}</p><div class="row" style="justify-content:flex-end"><button class="btn" id="cf-no">Batal</button><button class="btn ${danger?"danger solid":"primary"}" id="cf-yes">${esc(ok||"Ya")}</button></div>`,"sm");
+    document.getElementById("cf-no").onclick=()=>{closeModal();res(false);};
+    document.getElementById("cf-yes").onclick=()=>{closeModal();res(true);};
+    document.getElementById("cf-no").focus();
+  });
+}
+let toastT=null;
+function toast(msg){ let t=document.querySelector(".toast"); if(!t){ t=document.createElement("div"); t.className="toast"; t.setAttribute("role","status"); document.body.appendChild(t); } t.textContent=msg; clearTimeout(toastT); toastT=setTimeout(()=>t.remove(),2600); }
+async function copyText(text){ try{ await navigator.clipboard.writeText(text); toast("Disalin"); }catch(e){ const i=document.getElementById("qr-url"); if(i&&i.value===text){ i.select(); toast("Tekan Ctrl+C / Salin untuk menyalin"); } else { openModal(`<div class="modal-h"><h2>Salin data</h2>${xBtn()}</div><textarea id="copy-box" style="min-height:240px;font-family:monospace;font-size:.75rem">${esc(text)}</textarea><p class="small muted">Pilih semua teks lalu salin.</p>`); document.getElementById("copy-box").select(); } } }
+
+/* ---------- 16. AKSI (event delegation) ---------- */
+const ACTIONS = {
+  "go": el=>{ closeModal(); go(el.dataset.view); },
+  "close": ()=>closeModal(),
+  "close-go": el=>{ closeModal(); go(el.dataset.view); },
+  "bg-close": (el,e)=>{ if(e.target===el) closeModal(); },
+  "dismiss-corrupt": ()=>{ notices.corrupt=false; renderBanners(); },
+  "add-item": el=>{ const f=foodById(el.dataset.id); if(!f) return; draft.items.push({foodId:f.id,grams:f.def||100}); renderDraftItems(); renderTotals(); const inp=document.getElementById("g-"+(draft.items.length-1)); if(inp) inp.focus(); },
+  "remove-item": el=>{ draft.items.splice(+el.dataset.idx,1); renderDraftItems(); renderTotals(); },
+  "save-draft": ()=>saveDraft(),
+  "clear-draft": ()=>{ draft=newDraft(); render(); },
+  "cancel-edit": ()=>{ draft=newDraft(); go("riwayat"); },
+  "edit-log": el=>editLog(el.dataset.id),
+  "delete-log": async el=>{ const l=state.logs.find(x=>x.id===el.dataset.id); if(!l) return; const reopen=document.getElementById("rec-date")?l.menuId:null;
+    if(await confirmDialog({title:"Batalkan catatan?",body:`<b>${esc(l.name)}</b> (${esc(sessionLabel(l.session))}, ${esc(dateLabel(l.date,{day:"numeric",month:"long"}))}) akan dihapus dari riwayat.`,ok:"Batalkan catatan",danger:true})){
+      state.logs=state.logs.filter(x=>x.id!==l.id); saveState(); render(); toast("Catatan dibatalkan"); if(reopen) menuDetail(reopen,{date:l.date,session:l.session}); } },
+  "ktab": el=>{ katalogTab=el.dataset.tab; render(); },
+  "open-katalog-bahan": ()=>{ katalogTab="bahan"; go("katalog"); },
+  "menu-detail": el=>menuDetail(el.dataset.id),
+  "menu-qr": el=>menuQR(el.dataset.id),
+  "menu-edit": el=>menuEdit(el.dataset.id),
+  "menu-new": ()=>menuEdit(""),
+  "menu-delete": async el=>{ const m=menuById(el.dataset.id); if(m && await confirmDialog({title:"Hapus menu?",body:`${esc(m.name)} akan dihapus dari katalog. QR menu ini akan menampilkan "menu tidak ditemukan". Riwayat lama tetap ada.`,ok:"Hapus menu",danger:true})){ state.menus=state.menus.filter(x=>x.id!==m.id); saveState(); render(); toast("Menu dihapus"); } },
+  "menus-reset": async ()=>{ if(await confirmDialog({title:"Kembalikan menu bawaan?",body:"Semua perubahan dan menu buatanmu di katalog akan diganti dengan menu bawaan. Riwayat tidak berubah.",ok:"Kembalikan"})){ state.menus=clone(DEFAULT_MENUS); saveState(); render(); toast("Menu bawaan dikembalikan"); } },
+  "foods-reset": async ()=>{ if(await confirmDialog({title:"Kembalikan database bawaan?",body:"Nilai bahan yang kamu ubah dan bahan buatanmu akan diganti dengan data bawaan. Menu yang memakai bahan buatanmu perlu diperbaiki.",ok:"Kembalikan"})){ state.foods=clone(DEFAULT_FOODS); saveState(); render(); toast("Database bawaan dikembalikan"); } },
+  "food-edit": el=>foodEdit(el.dataset.id),
+  "record-menu": el=>recordMenu(el.dataset.id),
+  "copy-url": ()=>copyText(document.getElementById("qr-url").value),
+  "qr-download": el=>{ const img=document.getElementById("qr-img"); if(!img) return; fetch(img.src).then(r=>r.blob()).then(b=>downloadBlob(`qr-${el.dataset.id}.png`,b)).catch(()=>toast("Gagal menyimpan. Tekan lama gambar QR lalu pilih Simpan gambar.")); },
+  "qr-print": el=>{ const m=menuById(el.dataset.id); const img=document.getElementById("qr-img"); if(!m||!img) return;
+    document.getElementById("print-area").innerHTML=`<h1 style="font-family:sans-serif">SARAPAN PINTAR</h1><img src="${img.src}" alt="QR ${esc(m.name)}"><h2 style="font-family:sans-serif">${esc(m.name)}</h2><p style="font-family:monospace">${esc(menuUrl(m.id))}</p><p style="font-family:sans-serif">Pindai untuk melihat estimasi gizi dan mencatat sarapan.</p>`;
+    document.body.classList.add("printing-qr"); try{ window.print(); }catch(e){ toast("Cetak tidak didukung di tampilan ini"); } setTimeout(()=>document.body.classList.remove("printing-qr"),800); },
+  "export-json": ()=>{ if(downloadBlob(`sarapan-pintar-${mode}-${todayKey()}.json`,JSON.stringify(exportPayload(),null,2),"application/json")) toast("File JSON dibuat"); },
+  "export-csv": ()=>{ if(downloadBlob(`riwayat-sarapan-pintar-${todayKey()}.csv`,exportCSV(),"text/csv;charset=utf-8")) toast("File CSV dibuat"); },
+  "copy-json": ()=>copyText(JSON.stringify(exportPayload(),null,2)),
+  "more-hist": ()=>{ histDays+=14; render(); },
+  "switch-mode": async el=>{ const to=el.dataset.mode; setMode(to); notices.corrupt=false; draft=null; toast(to==="demo"?"Mode Demo aktif":"Beralih ke Data Saya"); go(to==="user"&&!state.profile?"profil":"dashboard"); },
+  "reset-demo": async ()=>{ if(await confirmDialog({title:"Reset Demo?",body:"Data Mode Demo dikembalikan ke keadaan awal. Data Saya tidak terpengaruh.",ok:"Reset Demo"})){ Store.del(KEY+"demo"); setMode("demo"); draft=null; go("dashboard"); toast("Demo direset"); } },
+  "wipe-all": async ()=>{ if(await confirmDialog({title:"Hapus seluruh data lokal?",body:"Profil, riwayat, menu, database bahan, dan pengaturan di <b>kedua mode</b> akan dihapus dari browser ini. Tindakan ini tidak bisa dibatalkan. Ekspor JSON dulu jika ingin menyimpan cadangan.",ok:"Hapus semua",danger:true})){
+      Store.del(KEY+"user"); Store.del(KEY+"demo"); Store.del(KEY+"mode"); try{ Object.keys(localStorage).filter(k=>k.startsWith(KEY)).forEach(k=>localStorage.removeItem(k)); }catch(e){}
+      Store.mem={}; mode="user"; state=freshState("user"); Store.set(KEY+"mode","user"); saveState(); draft=null; go("profil"); toast("Seluruh data lokal dihapus"); } },
+  "profile-clear": async ()=>{ if(await confirmDialog({title:"Hapus profil?",body:"Data diri dihapus. Riwayat tetap ada, tetapi target personal tidak ditampilkan lagi.",ok:"Hapus profil",danger:true})){ state.profile=null; saveState(); render(); toast("Profil dihapus"); } },
+  "save-settings": ()=>{ const u=document.getElementById("s-base").value.trim(); if(u && !/^https?:\/\/[^\s]+$/i.test(u)){ toast("URL harus diawali http:// atau https://"); document.getElementById("s-base").setAttribute("aria-invalid","true"); return; }
+    state.settings.qrBase=u; state.settings.useAkg=document.getElementById("s-akg").checked; saveState(); render(); toast("Pengaturan disimpan"); }
+};
+document.addEventListener("click",e=>{ const el=e.target.closest("[data-action]"); if(!el) return; const fn=ACTIONS[el.dataset.action]; if(!fn) return; if(el.tagName==="BUTTON"&&el.type==="submit"&&!el.dataset.action) return; if(el.dataset.action!=="bg-close") e.preventDefault(); try{ fn(el,e); }catch(err){ console.error(err); toast("Terjadi kesalahan: "+err.message); } });
+document.addEventListener("change",e=>{
+  if(e.target.id==="s-akg"){ state.settings.useAkg=e.target.checked; saveState(); render(); toast(e.target.checked?"Target AKG aktif":"Target AKG dimatikan"); }
+  if(e.target.dataset && e.target.dataset.change==="import"){ const file=e.target.files&&e.target.files[0]; if(!file) return;
+    const r=new FileReader(); r.onload=async()=>{ let o; try{ o=JSON.parse(r.result); }catch(err){ toast("Berkas bukan JSON yang valid"); return; }
+      const bad=validateImport(o); if(bad){ openModal(`<div class="modal-h"><h2>Impor ditolak</h2>${xBtn()}</div><p>${esc(bad)}</p>`,"sm"); return; }
+      if(await confirmDialog({title:"Impor data?",body:`Berkas berisi ${o.logs.length} catatan. Data di <b>${mode==="demo"?"Mode Demo":"Data Saya"}</b> akan diganti dengan isi berkas.`,ok:"Impor"})){
+        state={schemaVersion:SCHEMA_VERSION,kind:mode,profile:o.profile||null,settings:{useAkg:o.settings?.useAkg!==false,qrBase:typeof o.settings?.qrBase==="string"?o.settings.qrBase:""},foods:o.foods,menus:o.menus,logs:o.logs}; saveState(); render(); toast("Data diimpor"); } };
+    r.readAsText(file); e.target.value=""; }
+});
+document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&document.querySelector(".modal-bg")) closeModal(); });
+
+/* ---------- 17. MULAI ---------- */
+function handleIncomingMenu(){
+  let id=null;
+  try{ id=new URLSearchParams(location.search).get("menu"); }catch(e){}
+  if(!id && /^#menu-/.test(location.hash)) id=decodeURIComponent(location.hash.slice(1));
+  if(id===null) return false;
+  id=id.trim();
+  katalogTab="menu"; view="katalog"; render();
+  try{ history.replaceState(null,"",location.pathname+"#katalog"); }catch(e){}
+  menuDetail(id);
+  return true;
+}
+function start(){
+  Store.init(); loadState();
+  if(!handleIncomingMenu()){
+    const h=location.hash.slice(1); view=VIEWS.includes(h)?h:"dashboard"; render();
+  }
+  setInterval(()=>{ const t=todayKey(); if(t!==lastToday){ lastToday=t; if(draft&&!draft.editingId) draft.date=t; render(); } },30000);
+  document.addEventListener("visibilitychange",()=>{ if(!document.hidden && todayKey()!==lastToday){ lastToday=todayKey(); render(); } });
+  window.addEventListener("hashchange",()=>{ const h=location.hash.slice(1); if(/^menu-/.test(h)) handleIncomingMenu(); else if(VIEWS.includes(h)&&h!==view){ view=h; render(); } });
+}
+try{ start(); }catch(err){ console.error(err); document.getElementById("view").innerHTML=`<div class="banner err" role="alert">Aplikasi gagal dimulai: ${esc(err.message)}. Coba muat ulang halaman.</div>`; }
+</script>
+
+</body>
+</html>
