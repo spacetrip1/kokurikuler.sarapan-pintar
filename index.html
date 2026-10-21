@@ -1574,6 +1574,10 @@ const DEFAULT_FOODS = [
   {id:"susu-sapi",name:"Susu sapi segar",cat:"minum",state:"matang",kcal:61,protein:3.2,carb:4.8,fat:3.3,fiber:0,bdd:100,src:SRC.USDA,status:"rujukan",local:false,def:200,note:"Susu utuh (whole milk). 1 gelas ±200 g."},
   {id:"ayam-dada",name:"Daging ayam bagian dada",cat:"lauk",state:"mentah",kcal:120,protein:22.5,carb:0,fat:2.6,fiber:0,bdd:100,src:SRC.USDA,status:"rujukan",local:false,def:50,note:"Tanpa kulit, ditimbang mentah."},
   {id:"minyak-sawit",name:"Minyak goreng (terserap)",cat:"lemak",state:"matang",kcal:884,protein:0,carb:0,fat:100,fiber:0,bdd:100,src:SRC.USDA,status:"rujukan",local:false,def:5,note:"Isi dengan perkiraan minyak yang TERSERAP ke makanan, bukan minyak di wajan."},
+  {id:"buncis",name:"Buncis",cat:"sayur",state:"mentah",kcal:31,protein:1.8,carb:7.0,fat:0.2,fiber:2.7,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:30,note:"Berat mentah tanpa ujung."},
+  {id:"kentang",name:"Kentang",cat:"pokok",state:"mentah",kcal:77,protein:2.0,carb:17.5,fat:0.1,fiber:2.2,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:60,note:"Nilai kentang mentah (daging dan kulit). Timbang sebelum direbus."},
+  {id:"jamur-kuping",name:"Jamur kuping (basah)",cat:"sayur",state:"mentah",kcal:25,protein:0.5,carb:6.8,fat:0.0,fiber:null,bdd:100,src:SRC.SIM,status:"simulasi",local:true,def:15,note:"DATA SIMULASI. Berat jamur setelah direndam. Ganti dengan data TKPI sebelum dipakai serius."},
+  {id:"pentol",name:"Pentol (bakso)",cat:"lauk",state:"matang",kcal:190,protein:9.0,carb:22.0,fat:7.0,fiber:null,bdd:100,src:SRC.SIM,status:"simulasi",local:true,def:60,note:"DATA SIMULASI. Komposisi pentol (daging dan tepung) sangat bervariasi; ganti dengan data produk atau TKPI."},
   {id:"tape-singkong",name:"Tape singkong (prol tape)",cat:"pokok",state:"matang",kcal:173,protein:0.5,carb:42.5,fat:0.1,fiber:null,bdd:100,src:SRC.SIM,status:"simulasi",local:true,def:50,note:"DATA SIMULASI untuk contoh. Serat belum tersedia. Ganti dengan data TKPI sebelum dipakai serius."}
 ];
 const DEFAULT_MENUS = [
@@ -1592,9 +1596,9 @@ const DEFAULT_MENUS = [
   {id:"menu-jagung-pisang",name:"Jagung, Pisang & Tape",desc:"Sarapan ringan dari pangan lokal. Mengandung bahan berdata SIMULASI.",cost:6000,
    items:[{foodId:"jagung-manis",grams:100},{foodId:"pisang",grams:100},{foodId:"tape-singkong",grams:50}],
    steps:"Rebus jagung pipil 10 menit. Sajikan dengan pisang dan tape."},
-  {id:"menu-sayur-sop-ayam",name:"Sayur Sop Ayam",desc:"Sayur sop rumahan dengan ayam, wortel, kol, dan tomat. Berat bahan mengacu pada bahan mentah sebelum dimasak.",cost:8000,
-   items:[{foodId:"ayam-dada",grams:60},{foodId:"wortel",grams:40},{foodId:"kol",grams:40},{foodId:"tomat",grams:20},{foodId:"minyak-sawit",grams:2}],
-   steps:"Rebus ayam hingga matang. Masukkan wortel dan kol, lalu tomat. Bumbui secukupnya. Minyak dicatat sebagai perkiraan yang terserap; air dan bumbu yang belum ada di database belum dihitung."}
+  {id:"menu-sayur-sop-pentol",name:"Sayur Sop Pentol",desc:"Sup bening berisi pentol, kentang, wortel, kubis, buncis, dan jamur kuping.",cost:9000,
+   items:[{foodId:"pentol",grams:60},{foodId:"kentang",grams:60},{foodId:"wortel",grams:40},{foodId:"kol",grams:40},{foodId:"buncis",grams:30},{foodId:"jamur-kuping",grams:15},{foodId:"minyak-sawit",grams:3}],
+   steps:"Tumis bumbu dengan sedikit minyak, tambahkan air. Rebus kentang dan wortel hingga empuk, masukkan pentol dan buncis, lalu kubis dan jamur kuping. Masak sebentar hingga sayur layu."}
 ];
 // Angka Kecukupan Gizi 2019 (Permenkes RI No. 28 Tahun 2019), per orang per hari.
 const AKG_2019 = [
@@ -1651,7 +1655,7 @@ function loadState(){
     const s = JSON.parse(raw);
     if(!validState(s)) throw new Error("struktur tidak dikenal");
     s.logs = s.logs.filter(l=>l && /^\d{4}-\d{2}-\d{2}$/.test(l.date) && Array.isArray(l.items));
-    state = s;
+    state = s; migrateDefaults();
   }catch(e){
     Store.set(KEY+mode+":rusak-"+Date.now(), raw); // simpan cadangan, jangan dibuang diam-diam
     notices.corrupt = true;
@@ -1659,13 +1663,22 @@ function loadState(){
     saveState();
   }
 }
+// Menu/bahan bawaan yang baru ditambahkan di versi aplikasi berikutnya ikut muncul di data lama,
+// kecuali pengguna sengaja menghapusnya.
+function migrateDefaults(){
+  if(!Array.isArray(state.removedMenus)) state.removedMenus=[];
+  let changed=false;
+  DEFAULT_FOODS.forEach(f=>{ if(!state.foods.some(x=>x.id===f.id)){ state.foods.push(clone(f)); changed=true; } });
+  DEFAULT_MENUS.forEach(m=>{ if(!state.menus.some(x=>x.id===m.id) && !state.removedMenus.includes(m.id)){ state.menus.push(clone(m)); changed=true; } });
+  if(changed) saveState();
+}
 function saveState(){ Store.set(KEY+mode, JSON.stringify(state)); }
 function setMode(m){
   mode = m; Store.set(KEY+"mode", m);
   const raw = Store.get(KEY+m);
   let s=null; try{ s = raw?JSON.parse(raw):null; }catch(e){ s=null; }
   state = validState(s) ? s : (m==="demo" ? buildDemo() : freshState("user"));
-  saveState();
+  migrateDefaults(); saveState();
 }
 
 /* ---------- 3. MESIN PERHITUNGAN GIZI ---------- */
@@ -2353,8 +2366,8 @@ const ACTIONS = {
   "menu-qr": el=>menuQR(el.dataset.id),
   "menu-edit": el=>menuEdit(el.dataset.id),
   "menu-new": ()=>menuEdit(""),
-  "menu-delete": async el=>{ const m=menuById(el.dataset.id); if(m && await confirmDialog({title:"Hapus menu?",body:`${esc(m.name)} akan dihapus dari katalog. QR menu ini akan menampilkan "menu tidak ditemukan". Riwayat lama tetap ada.`,ok:"Hapus menu",danger:true})){ state.menus=state.menus.filter(x=>x.id!==m.id); saveState(); render(); toast("Menu dihapus"); } },
-  "menus-reset": async ()=>{ if(await confirmDialog({title:"Kembalikan menu bawaan?",body:"Semua perubahan dan menu buatanmu di katalog akan diganti dengan menu bawaan. Riwayat tidak berubah.",ok:"Kembalikan"})){ state.menus=clone(DEFAULT_MENUS); saveState(); render(); toast("Menu bawaan dikembalikan"); } },
+  "menu-delete": async el=>{ const m=menuById(el.dataset.id); if(m && await confirmDialog({title:"Hapus menu?",body:`${esc(m.name)} akan dihapus dari katalog. QR menu ini akan menampilkan "menu tidak ditemukan". Riwayat lama tetap ada.`,ok:"Hapus menu",danger:true})){ state.menus=state.menus.filter(x=>x.id!==m.id); if(!Array.isArray(state.removedMenus)) state.removedMenus=[]; if(DEFAULT_MENUS.some(d=>d.id===m.id)) state.removedMenus.push(m.id); saveState(); render(); toast("Menu dihapus"); } },
+  "menus-reset": async ()=>{ if(await confirmDialog({title:"Kembalikan menu bawaan?",body:"Semua perubahan dan menu buatanmu di katalog akan diganti dengan menu bawaan. Riwayat tidak berubah.",ok:"Kembalikan"})){ state.menus=clone(DEFAULT_MENUS); state.removedMenus=[]; saveState(); render(); toast("Menu bawaan dikembalikan"); } },
   "foods-reset": async ()=>{ if(await confirmDialog({title:"Kembalikan database bawaan?",body:"Nilai bahan yang kamu ubah dan bahan buatanmu akan diganti dengan data bawaan. Menu yang memakai bahan buatanmu perlu diperbaiki.",ok:"Kembalikan"})){ state.foods=clone(DEFAULT_FOODS); saveState(); render(); toast("Database bawaan dikembalikan"); } },
   "food-edit": el=>foodEdit(el.dataset.id),
   "record-menu": el=>recordMenu(el.dataset.id),
