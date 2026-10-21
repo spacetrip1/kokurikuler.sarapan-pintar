@@ -1561,6 +1561,8 @@ const DEFAULT_FOODS = [
   {id:"bayam",name:"Bayam",cat:"sayur",state:"mentah",kcal:23,protein:2.9,carb:3.6,fat:0.4,fiber:2.2,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:50,note:"Berat daun mentah yang sudah disiangi."},
   {id:"kangkung",name:"Kangkung",cat:"sayur",state:"mentah",kcal:19,protein:2.6,carb:3.1,fat:0.2,fiber:2.1,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:50,note:"Berat mentah yang sudah disiangi."},
   {id:"tauge",name:"Tauge kacang hijau",cat:"sayur",state:"mentah",kcal:30,protein:3.0,carb:5.9,fat:0.2,fiber:1.8,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:30,note:"Berat mentah."},
+  {id:"kol",name:"Kubis / kol",cat:"sayur",state:"mentah",kcal:25,protein:1.3,carb:5.8,fat:0.1,fiber:2.5,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:30,note:"Berat mentah."},
+  {id:"wortel",name:"Wortel",cat:"sayur",state:"mentah",kcal:41,protein:0.9,carb:9.6,fat:0.2,fiber:2.8,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:30,note:"Berat mentah tanpa kulit."},
   {id:"tomat",name:"Tomat merah",cat:"sayur",state:"mentah",kcal:18,protein:0.9,carb:3.9,fat:0.2,fiber:1.2,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:20,note:"Berat mentah."},
   {id:"kacang-tanah",name:"Kacang tanah (bumbu pecel)",cat:"kacang",state:"mentah",kcal:567,protein:25.8,carb:16.1,fat:49.2,fiber:8.5,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:20,note:"Berat kacang mentah/sangrai sebelum diulek. Gula merah & cabai bumbu belum dihitung."},
   {id:"edamame",name:"Edamame Jember (rebus)",cat:"kacang",state:"matang",kcal:121,protein:11.9,carb:8.9,fat:5.2,fiber:5.2,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:75,note:"Biji edamame matang tanpa kulit polong."},
@@ -1570,17 +1572,12 @@ const DEFAULT_FOODS = [
   {id:"pisang",name:"Pisang (daging buah)",cat:"buah",state:"mentah",kcal:89,protein:1.1,carb:22.8,fat:0.3,fiber:2.6,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:100,note:"Berat daging buah tanpa kulit."},
   {id:"jeruk",name:"Jeruk (Semboro)",cat:"buah",state:"mentah",kcal:47,protein:0.9,carb:11.8,fat:0.1,fiber:2.4,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:100,note:"Nilai jeruk manis umum (bukan varietas Semboro khusus). Berat daging buah."},
   {id:"susu-sapi",name:"Susu sapi segar",cat:"minum",state:"matang",kcal:61,protein:3.2,carb:4.8,fat:3.3,fiber:0,bdd:100,src:SRC.USDA,status:"rujukan",local:false,def:200,note:"Susu utuh (whole milk). 1 gelas ±200 g."},
+  {id:"ayam-dada",name:"Daging ayam bagian dada",cat:"lauk",state:"mentah",kcal:120,protein:22.5,carb:0,fat:2.6,fiber:0,bdd:100,src:SRC.USDA,status:"rujukan",local:false,def:50,note:"Tanpa kulit, ditimbang mentah."},
   {id:"minyak-sawit",name:"Minyak goreng (terserap)",cat:"lemak",state:"matang",kcal:884,protein:0,carb:0,fat:100,fiber:0,bdd:100,src:SRC.USDA,status:"rujukan",local:false,def:5,note:"Isi dengan perkiraan minyak yang TERSERAP ke makanan, bukan minyak di wajan."},
-  {id:"kentang",name:"Kentang",cat:"pokok",state:"mentah",kcal:75.0,protein:2.0,carb:17.5,fat:0.25,fiber:5.5,bdd:100,src:SRC.TKPI,status:"rujukan",local:true,def:40,note:"Timbang mentah tanpa kulit sebelum dimasak."},
-  {id:"brokoli",name:"Brokoli",cat:"sayur",state:"mentah",kcal:33.33,protein:2.67,carb:6.67,fat:0.33,fiber:8.67,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:30,note:"Berat mentah tangkai dan kuntum yang sudah disiangi."},
-  {id:"buncis",name:"Buncis",cat:"sayur",state:"mentah",kcal:30.0,protein:2.0,carb:7.0,fat:0.0,fiber:13.5,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:20,note:"Berat mentah setelah ujung-ujungnya dibuang."},
-  {id:"wortel",name:"Wortel",cat:"sayur",state:"mentah",kcal:40.0,protein:1.0,carb:9.33,fat:0.33,fiber:9.33,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:30,note:"Timbang mentah bersih tanpa kulit luar."},
-  {id:"bakso-sapi",name:"Bakso Sapi",cat:"lauk",state:"matang",kcal:200.0,protein:13.33,carb:8.33,fat:12.67,fiber:0,bdd:100,src:SRC.SIM,status:"simulasi",local:true,def:30,note:"Bakso sapi siap konsumsi/siap pakai."},
-  {id:"daun-seledri",name:"Daun seledri",cat:"sayur",state:"mentah",kcal:26.67,protein:1.33,carb:5.33,fat:0.0,fiber:14.67,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:15,note:"Berat daun dan batang seledri segar yang diiris."},
-  {id:"jamur-kuping",name:"Jamur kuping (basah)",cat:"sayur",state:"mentah",kcal:24.0,protein:0.4,carb:7.2,fat:0.0,fiber:null,bdd:100,src:SRC.SIM,status:"simulasi",local:true,def:25,note:"Timbang setelah jamur direndam air hingga mengembang."},
-  {id:"makaroni",name:"Makaroni",cat:"pokok",state:"mentah",kcal:366.67,protein:12.0,carb:73.33,fat:1.33,fiber:21.33,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:15,note:"Timbang makaroni kering/mentah sebelum direbus."},
-  {id:"kubis",name:"Kubis / kol",cat:"sayur",state:"mentah",kcal:24.0,protein:1.2,carb:5.6,fat:0.0,fiber:10.0,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:25,note:"Berat kubis segar mentah setelah diiris."},
-  {id:"ayam-dada",name:"Daging ayam bagian dada",cat:"lauk",state:"mentah",kcal:191.67,protein:28.33,carb:0.0,fat:7.5,fiber:0,bdd:100,src:SRC.USDA,status:"rujukan",local:false,def:30,note:"Daging dada ayam mentah tanpa kulit dan tulang."}
+  {id:"buncis",name:"Buncis",cat:"sayur",state:"mentah",kcal:31,protein:1.8,carb:7.0,fat:0.2,fiber:2.7,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:30,note:"Berat mentah tanpa ujung."},
+  {id:"kentang",name:"Kentang",cat:"pokok",state:"mentah",kcal:77,protein:2.0,carb:17.5,fat:0.1,fiber:2.2,bdd:100,src:SRC.USDA,status:"rujukan",local:true,def:60,note:"Nilai kentang mentah (daging dan kulit). Timbang sebelum direbus."},
+  {id:"jamur-kuping",name:"Jamur kuping (basah)",cat:"sayur",state:"mentah",kcal:25,protein:0.5,carb:6.8,fat:0.0,fiber:null,bdd:100,src:SRC.SIM,status:"simulasi",local:true,def:15,note:"DATA SIMULASI. Berat jamur setelah direndam. Ganti dengan data TKPI sebelum dipakai serius."},
+  {id:"pentol",name:"Pentol (bakso)",cat:"lauk",state:"matang",kcal:190,protein:9.0,carb:22.0,fat:7.0,fiber:null,bdd:100,src:SRC.SIM,status:"simulasi",local:true,def:60,note:"DATA SIMULASI. Komposisi pentol (daging dan tepung) sangat bervariasi; ganti dengan data produk atau TKPI."},
   {id:"tape-singkong",name:"Tape singkong (prol tape)",cat:"pokok",state:"matang",kcal:173,protein:0.5,carb:42.5,fat:0.1,fiber:null,bdd:100,src:SRC.SIM,status:"simulasi",local:true,def:50,note:"DATA SIMULASI untuk contoh. Serat belum tersedia. Ganti dengan data TKPI sebelum dipakai serius."}
 ];
 const DEFAULT_MENUS = [
@@ -1599,9 +1596,9 @@ const DEFAULT_MENUS = [
   {id:"menu-jagung-pisang",name:"Jagung, Pisang & Tape",desc:"Sarapan ringan dari pangan lokal. Mengandung bahan berdata SIMULASI.",cost:6000,
    items:[{foodId:"jagung-manis",grams:100},{foodId:"pisang",grams:100},{foodId:"tape-singkong",grams:50}],
    steps:"Rebus jagung pipil 10 menit. Sajikan dengan pisang dan tape."},
-  {id:"menu-sayur-sop-pentol",name:"Sayur Sop Pentol",desc:"Sup bening berisi pentol bakso, kentang, wortel, kubis, buncis, seledri, jamur kuping, brokoli, makaroni, dan daging ayam.",cost:9000,
-   items:[{foodId:"bakso-sapi",grams:30},{foodId:"kentang",grams:40},{foodId:"brokoli",grams:30},{foodId:"buncis",grams:20},{foodId:"wortel",grams:30},{foodId:"daun-seledri",grams:15},{foodId:"jamur-kuping",grams:25},{foodId:"makaroni",grams:15},{foodId:"kubis",grams:25},{foodId:"ayam-dada",grams:30}],
-   steps:"Tumis bumbu dengan sedikit minyak, tambahkan air. Rebus kentang dan wortel hingga empuk, masukkan pentol dan buncis, lalu kubis dan jamur kuping serta sayuran lainnya. Masak sebentar hingga sayur layu."}
+  {id:"menu-sayur-sop-pentol",name:"Sayur Sop Pentol",desc:"Sup bening berisi pentol, kentang, wortel, kubis, buncis, dan jamur kuping.",cost:9000,
+   items:[{foodId:"pentol",grams:60},{foodId:"kentang",grams:60},{foodId:"wortel",grams:40},{foodId:"kol",grams:40},{foodId:"buncis",grams:30},{foodId:"jamur-kuping",grams:15},{foodId:"minyak-sawit",grams:3}],
+   steps:"Tumis bumbu dengan sedikit minyak, tambahkan air. Rebus kentang dan wortel hingga empuk, masukkan pentol dan buncis, lalu kubis dan jamur kuping. Masak sebentar hingga sayur layu."}
 ];
 // Angka Kecukupan Gizi 2019 (Permenkes RI No. 28 Tahun 2019), per orang per hari.
 const AKG_2019 = [
